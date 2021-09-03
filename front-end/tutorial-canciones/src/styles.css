@@ -1,1 +1,70 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --rnr-cafe: #5b3b2b;
+  --rnr-beige: #f4eccb;
+  --rnr-azul: #74ccac;
+  --rnr-mostaza: #ebbb20;
+  --rnr-naranja: #d34c1c;
+  /*
+    #f4eccb beige
+    #74ccac azul
+    #5b3b2b cafe
+    #ebbb20 mostaza
+    #d34c1c naranja
+    */
+}
+html body {
+  background-color: var(rgb(121, 109, 109));
+}
+
+h1 {
+  text-align: center;
+  font-size: 22px;
+  align-self: center;
+  font-family: titulo1;
+  color: var(--rnr-naranja);
+  border-bottom: double var(--rnr-naranja);
+  text-transform: uppercase;
+}
+h2 {
+  font-size: 20px;
+  align-self: center;
+  font-family: titulo2;
+  color: var(--rnr-cafe);
+  text-align: justify;
+  margin-left: 0.5em;
+}
+h3 {
+  font-size: 18px;
+  align-self: center;
+  margin-left: 1em;
+  font-family: titulo3;
+  color: var(--rnr-cafe);
+  text-align: justify;
+}
+p {
+  font-size: 16px;
+  align-self: center;
+  font-family: texto;
+  color: var(--rnr-cafe);
+  margin-left: 1.5em;
+  text-align: justify;
+}
+
+@font-face {
+  font-family: texto;
+  src: url("./fonts/Orelega_One/OrelegaOne-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: titulo1;
+  src: url("./fonts/Limelight/Limelight-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: titulo2;
+  src: url("./fonts/Train_One/TrainOne-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: titulo3;
+  src: url("./fonts/Bungee_Shade/BungeeShade-Regular.ttf") format("truetype");
+}
+
