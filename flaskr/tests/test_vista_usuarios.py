@@ -1,5 +1,5 @@
 import unittest
-from flaskr.vistas import VistaUsuarios
+from flaskr.vistas import VistaUsuarios_Implementacion
 from flaskr.modelos import db, Cancion, Usuario
 from faker import Faker
 
@@ -22,13 +22,13 @@ def limpiar_db():
     db.session.commit()
 
 
-class test_vista_usuario(unittest.TestCase):
+class test_vista_usuarios(unittest.TestCase):
 
     def __init__(self, methodName):
         self.numero_usuarios_test = 5
         self.generador_datos = Faker()
         Faker.seed(2000)
-        self.vista_usuarios = VistaUsuarios()
+        self.vista_usuarios = VistaUsuarios_Implementacion()
         super().__init__(methodName=methodName)
 
     # Validar lista
@@ -45,12 +45,7 @@ class test_vista_usuario(unittest.TestCase):
             self.assertFalse(id in usuarios_validados)
             usuarios_validados.add(id)
             usuario_real = self.usuarios_dic[id]
-            self.assertEqual(usuario_real.nombre,
-                             usuario_a_validar.get("nombre"))
-            self.assertEqual(
-                usuario_real.contrasena, usuario_a_validar.get("contrasena"))
-
-            self.assertTrue(isinstance(usuario_a_validar.get("albumes"), list))
+            self.assertEqual(usuario_real.nombre, usuario_a_validar.get("nombre"))
 
         self.assertEqual(len(usuarios_validados), self.numero_usuarios_test)
 

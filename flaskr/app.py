@@ -1,3 +1,4 @@
+from flaskr.vistas.vistas import VistaCompartirAlbum
 from flaskr import create_app
 from flask_restful import Api
 from .modelos import db
@@ -23,5 +24,6 @@ api.add_resource(VistaAlbumsUsuario, '/usuario/<int:id_usuario>/albumes')
 api.add_resource(VistaAlbum, '/album/<int:id_album>')
 api.add_resource(VistaCancionesAlbum, '/album/<int:id_album>/canciones')
 api.add_resource(VistaUsuarios, '/usuarios')
+api.add_resource(VistaCompartirAlbum, '/compartir/album/<int:id_album>')
 
 jwt = JWTManager(app)
