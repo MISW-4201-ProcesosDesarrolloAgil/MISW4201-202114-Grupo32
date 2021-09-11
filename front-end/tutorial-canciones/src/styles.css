@@ -14,41 +14,94 @@
     */
 }
 html body {
-  background-color: var(rgb(121, 109, 109));
+  background-color: lightgray!important;
+}
+.container {
+  /* background-color: green !important; */
+  width: 90% !important;
+  height: auto !important;
+  margin: auto !important;
+  max-width: none!important;
+}
+
+.ionic-card {
+  width: auto !important;
+  height: auto !important;
+  background-color: var(--rnr-beige) !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  margin: 1em !important;
+}
+
+.ionic-card-header {
+  background-color: var(--rnr-azul) !important;
+}
+.ionic-card-body {
+  background-color: var(--rnr-beige)  !important;
+}
+.ionic-tr {
+  width: 100% !important;
+  height: auto !important;
+  /* background-color: var(--rnr-azul)!important; */
+  /* border: 1px solid var(--rnr-cafe)!important; */
+  display: flex !important;
+  margin-bottom: 1em!important;
+}
+.ionic-td {
+  width: 100% !important;
+  height: auto !important;
+  background-color: var(--rnr-azul) !important;
+  margin-bottom: 0em!important;
+}
+.img-rockola{
+  width: 15em;
+  height: auto;
+  border-bottom: double var(--rnr-naranja)!important;
+  padding: 1em;
 }
 
 h1 {
-  text-align: center;
-  font-size: 22px;
-  align-self: center;
-  font-family: titulo1;
-  color: var(--rnr-naranja);
-  border-bottom: double var(--rnr-naranja);
-  text-transform: uppercase;
+  text-align: center!important;
+  font-size: 30px!important;
+  align-self: center!important;
+  font-family: titulo1!important;
+  color: var(--rnr-naranja)!important;
+  border-bottom: double var(--rnr-naranja)!important;
+  text-transform: uppercase!important;
+}
+.titulo {
+  color: white!important;
 }
 h2 {
-  font-size: 20px;
-  align-self: center;
-  font-family: titulo2;
-  color: var(--rnr-cafe);
-  text-align: justify;
-  margin-left: 0.5em;
+  font-size: 22px!important;
+  align-self: center!important;
+  font-family: titulo2!important;
+  color: var(--rnr-cafe)!important;
+  text-align: justify!important;
+  margin: 0px!important;
+  margin-left: 0.5em!important;
 }
 h3 {
-  font-size: 18px;
-  align-self: center;
-  margin-left: 1em;
-  font-family: titulo3;
-  color: var(--rnr-cafe);
-  text-align: justify;
+  font-size: 20px!important;
+  align-self: center!important;
+  margin-left: 1em!important;
+  font-family: titulo3!important;
+  color: var(--rnr-cafe)!important;
+  text-align: justify!important;
 }
 p {
-  font-size: 16px;
-  align-self: center;
-  font-family: texto;
-  color: var(--rnr-cafe);
-  margin-left: 1.5em;
-  text-align: justify;
+  font-size: 20px!important;
+  align-self: center!important;
+  font-family: texto!important;
+  color: var(--rnr-cafe)!important;
+  margin: 0px !important;
+  margin-left: 1.5em !important;
+  text-align: justify!important;
+}
+
+@media (max-width: 768px) {
+  /* .ionic-elemento-listado {
+    display: block!important;
+  } */
 }
 
 @font-face {
@@ -67,5 +120,3 @@ p {
   font-family: titulo3;
   src: url("./fonts/Bungee_Shade/BungeeShade-Regular.ttf") format("truetype");
 }
-
-
