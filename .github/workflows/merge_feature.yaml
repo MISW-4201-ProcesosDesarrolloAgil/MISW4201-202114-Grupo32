@@ -57,6 +57,7 @@ jobs:
         uses: gsactions/commit-message-checker@v1
         with:
           pattern: "^MERGE:*"
+          flags: "u"
           error: "The last push of this feature is not ready to be merged with the develop branch"
   automerge:
     name: Automerge
