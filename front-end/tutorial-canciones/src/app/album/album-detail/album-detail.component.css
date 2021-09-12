@@ -2,5 +2,9 @@
   width: auto !important;
 }
 .contenido-tabla {
-  background-color: white;
+  background-color: white ;
+}
+p{
+  margin-left: .2em !important;
+
 }

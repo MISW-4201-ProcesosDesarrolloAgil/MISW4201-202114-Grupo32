@@ -37,12 +37,12 @@ html body {
 }
 .ionic-card-body {
   background-color: var(--rnr-beige) !important;
+  overflow-x: auto;
+
 }
 .ionic-tr {
   width: 100% !important;
   height: auto !important;
-  /* background-color: var(--rnr-azul)!important; */
-  /* border: 1px solid var(--rnr-cafe)!important; */
   display: flex !important;
   margin-bottom: 1em !important;
 }
@@ -54,6 +54,7 @@ html body {
 }
 
 .ionic-tr:hover {
+
   background: var(--rnr-mostaza) !important;
 }
 
@@ -206,14 +207,25 @@ a {
   border-bottom: double var(--rnr-cafe) !important;
 }
 
-#header{
+#header {
   width: auto;
   height: 2em;
   margin: auto;
   padding-top: 0.5em;
   border-bottom: double var(--rnr-cafe) !important;
+}
+.iconos {
+  width: 3em;
+  height: auto;
+  margin: 0.5em;
+}
+.iconos:hover {
+  background-color: var(--rnr-mostaza) !important;
+  border-radius: 1em 1em 1em 1em !important;
 
 }
+
+
 
 @media (max-width: 768px) {
   .texto-menu {
@@ -224,13 +236,36 @@ a {
     min-width: 10em;
     max-width: 10em;
   }
-
+  .img-navbar {
+    width: 1em;
+  }
   #sidebar.active {
     margin-left: -10em;
   }
   .img-menu {
-    margin: auto!important;
-}
+    margin: auto !important;
+  }
+  .ionic-tr {
+    display: block !important;
+  }
+  .ionic-card {
+    margin: 0.5em !important;
+  }
+  h1 {
+    font-size: 26px !important;
+  }
+  h2 {
+    font-size: 20px !important;
+  }
+  h3 {
+    font-size: 20px !important;
+  }
+  p {
+    font-size: 16px !important;
+  }
+  a {
+    font-size: 16px !important;
+  }
 }
 
 @font-face {
