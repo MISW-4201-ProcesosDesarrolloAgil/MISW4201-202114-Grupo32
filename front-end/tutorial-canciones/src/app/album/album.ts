@@ -9,6 +9,7 @@ export class Album {
     interpretes: Array<string>;
     canciones: Array<Cancion>;
     compartido_a: Array<number>;
+    es_compartido: boolean;
 
     constructor(
         id: number,
@@ -30,6 +31,7 @@ export class Album {
         this.interpretes = interpretes;
         this.canciones = canciones;
         this.compartido_a = compartido_a;
+        this.es_compartido = false;
     }
 }
 

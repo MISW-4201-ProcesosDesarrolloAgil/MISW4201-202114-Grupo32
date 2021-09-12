@@ -8,11 +8,11 @@
           </div>
           <div class="navbar navbar-collapse collapse w-100 order-3 dual-collapse2">
               <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown">
-                  <button *ngIf="album" type="button" class="btn btn-outline-warning ms-3 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="compartirAlbum()" title="Compartir album">
+                <li class="nav-item dropdown" id="compartir_album" *ngIf="album && album.usuario">
+                  <button type="button" class="btn btn-outline-warning ms-3 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="compartirAlbum()" title="Compartir album">
                     <i class="bi bi-box-arrow-up"></i>
                   </button>
-                  <div *ngIf="album" class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <form>
                       <label class="dropdown-item" style="text-align: center;">Compartir a usuarios</label>
                       <div class="dropdown-divider"></div>
@@ -26,13 +26,13 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <button *ngIf="album" type="button" class="btn btn-outline-success me-1 me-2" (click)="goToEdit()" title="Editar álbum"><i class="bi bi-pencil-square"></i></button>
+                  <button *ngIf="album && album.usuario" id="editar_album" type="button" class="btn btn-outline-success me-1 me-2" (click)="goToEdit()" title="Editar álbum"><i class="bi bi-pencil-square"></i></button>
                 </li>
                 <li class="nav-item">
-                  <button *ngIf="album" type="button" class="btn btn-outline-info me-1 me-2" (click)="goToJoinCancion()" title="Agregar canción" ><i class="bi bi-plus" ></i><i class="bi bi-music-note"></i></button>
+                  <button *ngIf="album && album.usuario" id="agregar_cancion" type="button" class="btn btn-outline-info me-1 me-2" (click)="goToJoinCancion()" title="Agregar canción" ><i class="bi bi-plus" ></i><i class="bi bi-music-note"></i></button>
                 </li>
                 <li class="nav-item">
-                  <button *ngIf="album" type="button" class="btn btn-outline-danger me-1" (click)="eliminarAlbum()" title="Eliminar álbum"><i class="bi bi-trash-fill"></i></button>
+                  <button *ngIf="album && album.usuario" id="eliminar_album" type="button" class="btn btn-outline-danger me-1" (click)="eliminarAlbum()" title="Eliminar álbum"><i class="bi bi-trash-fill"></i></button>
                 </li>
               </ul>
           </div>
@@ -104,7 +104,6 @@
           </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>

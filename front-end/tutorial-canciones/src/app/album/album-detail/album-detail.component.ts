@@ -34,6 +34,7 @@ export class AlbumDetailComponent implements OnInit {
   ngOnInit() {
     this.userId = parseInt(this.router.snapshot.params.userId)
     this.token = this.router.snapshot.params.userToken
+    this.userList = []
   }
 
   goToEdit(){
