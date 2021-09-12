@@ -84,9 +84,8 @@ class VistaLogIn(Resource):
             return {"mensaje": "Inicio de sesión exitoso", "token": token_de_acceso}
 
 
-class VistaAlbumsUsuario(Resource):
+class VistaAlbumsUsuario_implementacion:
 
-    @jwt_required()
     def post(self, id_usuario):
         nuevo_album = Album(titulo=request.json["titulo"], anio=request.json["anio"],
                             descripcion=request.json["descripcion"], medio=request.json["medio"])
@@ -101,7 +100,6 @@ class VistaAlbumsUsuario(Resource):
 
         return album_schema.dump(nuevo_album)
 
-    @jwt_required()
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
         return [album_schema.dump(al) for al in usuario.albumes]
@@ -129,6 +127,24 @@ class VistaCompartirAlbum_Implementacion:
             return 'Se generó un error al tratar de compartir el album', 409
 
         return album_schema.dump(album)
+
+
+class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
+    @jwt_required()
+    def post(self, id_usuario):
+        return super().post(id_usuario,request)
+    def get(self, id_usuario):
+        return super().get(id_usuario)
+
+class VistaAlbumsCompartidosUsuario_implementacion(Resource):
+    def get(self, id_usuario):
+        usuario = Usuario.query.get_or_404(id_usuario)
+        return [album_schema.dump(al) for al in usuario.albumes_compartidos]
+
+class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion,Resource):
+    @jwt_required()
+    def get(self, id_usuario):
+        return super().get(id_usuario)
 
 
 class VistaCompartirAlbum(VistaCompartirAlbum_Implementacion, Resource):

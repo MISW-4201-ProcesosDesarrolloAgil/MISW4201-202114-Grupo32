@@ -17,11 +17,12 @@ export class AlbumListComponent implements OnInit {
     private toastr: ToastrService,
     private routerPath: Router
   ) { }
-  
+
   userId: number
   token: string
   albumes: Array<Album>
   mostrarAlbumes: Array<Album>
+  mostrarAlbumesCompartidos: Array<Album>
   albumSeleccionado: Album
   indiceSeleccionado: number
 
@@ -32,6 +33,7 @@ export class AlbumListComponent implements OnInit {
     else{
       this.userId = parseInt(this.router.snapshot.params.userId)
       this.token = this.router.snapshot.params.userToken
+      this.getAlbumesCompartidos();
       this.getAlbumes();
     }
   }
@@ -42,7 +44,7 @@ export class AlbumListComponent implements OnInit {
       this.albumes = albumes
       this.mostrarAlbumes = albumes
       if(albumes.length>0){
-        this.onSelect(this.mostrarAlbumes[0], 0)
+        this.onSelect(this.mostrarAlbumes[0], 0,false)
       }
     },
     error => {
@@ -57,10 +59,38 @@ export class AlbumListComponent implements OnInit {
         this.showError("Ha ocurrido un error. " + error.message)
       }
     })
-    
   }
 
-  onSelect(a: Album, index: number){
+  getAlbumesCompartidos():void{
+    this.albumService.getAlbumesCompartidos(this.userId, this.token)
+    .subscribe(albumes => {
+      this.albumes = albumes
+      this.mostrarAlbumesCompartidos = albumes
+      if(albumes.length>0){
+        this.onSelect(this.mostrarAlbumesCompartidos[0], 0,true)
+      }
+    },
+    error => {
+      console.log(error)
+      if(error.statusText === "UNAUTHORIZED"){
+        this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+      }
+      else if(error.statusText === "UNPROCESSABLE ENTITY"){
+        this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+      }
+      else{
+        this.showError("Ha ocurrido un error. " + error.message)
+      }
+    })
+  }
+
+  onSelect(a: Album, index: number, compartido:boolean){
+    $("#editar_album").show();
+    $("#eliminar_album").show();
+    if(compartido){
+      $("#eliminar_album").hide();
+      $("#editar_album").hide();
+    }
     this.indiceSeleccionado = index
     this.albumSeleccionado = a
     this.albumService.getCancionesAlbum(a.id, this.token)
