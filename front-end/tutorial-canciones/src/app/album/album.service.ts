@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Album} from './album';
 import { Cancion } from '../cancion/cancion';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlbumService {
 
-  private backUrl: string = "http://localhost:5000"
+  private backUrl: string = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -61,6 +62,13 @@ export class AlbumService {
 
   asociarCancion(albumId: number, cancionId: number): Observable<Cancion>{
     return this.http.post<Cancion>(`${this.backUrl}/album/${albumId}/canciones`, {"id_cancion": cancionId})
+  }
+
+  compartirAlbum(token:string, album: Album, usuarios: Array<number>): Observable<Album>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.post<Album>(`${this.backUrl}/compartir/album/${album.id}`, {"id_usuarios": usuarios}, {headers: headers})
   }
 
 }
