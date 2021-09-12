@@ -30,7 +30,7 @@
 
           <table class="table table-hover mb-0" aria-describedby="colecName">
             <tbody>
-              <tr class="ionic-tr" *ngFor="let album of mostrarAlbumes; index as i" (click)="onSelect(album, i)"
+              <tr class="ionic-tr" *ngFor="let album of mostrarAlbumes; index as i" (click)="onSelect(album, i,false)"
                 [ngClass]="{'selected': i === indiceSeleccionado}">
                 <td class="ionic-td">
                   <p>{{album.titulo}}</p>
@@ -42,6 +42,32 @@
             </tbody>
           </table>
 
+        </div>
+      </div>
+      <div class="card ionic-card">
+        <div class="card-header ionic-card-header">
+          <div class="row">
+            <div class="col-10 col-sm text-center">
+              <label class="fs-4">
+                <h1> Álbumes Compartidos</h1>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="card-body ionic-card-body">
+          <table class="table table-hover mb-0" aria-describedby="colecName">
+            <tbody>
+              <tr class="ionic-tr" *ngFor="let album of mostrarAlbumesCompartidos; index as i" (click)="onSelect(album, i,true)"
+                [ngClass]="{'selected': i === indiceSeleccionado}">
+                <td class="ionic-td">
+                  <p>{{album.titulo}}</p>
+                </td>
+                <td class="ionic-td">
+                  <p> {{album.anio}}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
