@@ -1,15 +1,23 @@
-export class Usuario {
-    id: number;
+export class UsuarioSimple{
+  id: number;
+  nombre: string;
+  constructor(
+    id: number,
     nombre: string
-    albumes: Array<any>
+  ){
+    this.id = id;
+    this.nombre = nombre;
+  }
+}
 
+export class Usuario extends UsuarioSimple{
+    albumes: Array<any>
     constructor(
         id: number,
         nombre: string,
         albumes: Array<any>,
     ){
-        this.id = id;
-        this.nombre = nombre;
+        super(id, nombre);
         this.albumes = albumes
     }
 }
