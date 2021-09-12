@@ -1,20 +1,44 @@
-<div class="card ionic-card" style="background-color: white">
-  <div class="card-header ionic-card-header">
-    <div class="row">
-      <div class="col-12 text-center mb-2">
-        <label class="fs-4 fw-bold">
-          <h1>Álbum: {{ album?.titulo }} ({{ album?.anio }})</h1>
-        </label>
-        <img class="iconos" id='editar_album' (click)="goToEdit()" src="/assets/edit.png" alt="crear" />
-
-        <img class="iconos" (click)="goToJoinCancion()" src="/assets/add.png" alt="crear" />
-
-        <img class="iconos" id='eliminar_album' type="button" (click)="eliminarAlbum()" src="/assets/delete.png" alt="crear" />
-
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col-12 text-center mb-2" >
+      <nav class="navbar navbar-expand-md">
+          <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2"></div>
+          <div class="mx-auto order-0">
+              <span class="navbar-brand mx-auto"><label class="fs-4 fw-bold">Álbum: {{album?.titulo}} ({{album?.anio}})</label></span>
+          </div>
+          <div class="navbar navbar-collapse collapse w-100 order-3 dual-collapse2">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown" id="compartir_album" *ngIf="album && album.usuario">
+                  <button type="button" class="btn btn-outline-warning ms-3 me-2" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="compartirAlbum()" title="Compartir album">
+                    <i class="bi bi-box-arrow-up"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <form>
+                      <label class="dropdown-item" style="text-align: center;">Compartir a usuarios</label>
+                      <div class="dropdown-divider"></div>
+                      <div *ngIf="userList.length > 0; else notUsers">
+                        <div *ngFor="let user of userList" class="dropdown-item"><input type="checkbox" [value]="user.id" (change)="onCheckboxChange($event)"> {{user.nombre}}</div>
+                      </div>
+                      <ng-template #notUsers><label class="dropdown-item" style="text-align: center; color: gray;">No hay usuarios</label></ng-template>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" style="text-align: center;" (click)="onSubmitCompartirAlbum()">Enviar</a>
+                    </form>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <button *ngIf="album && album.usuario" id="editar_album" type="button" class="btn btn-outline-success me-1 me-2" (click)="goToEdit()" title="Editar álbum"><i class="bi bi-pencil-square"></i></button>
+                </li>
+                <li class="nav-item">
+                  <button *ngIf="album && album.usuario" id="agregar_cancion" type="button" class="btn btn-outline-info me-1 me-2" (click)="goToJoinCancion()" title="Agregar canción" ><i class="bi bi-plus" ></i><i class="bi bi-music-note"></i></button>
+                </li>
+                <li class="nav-item">
+                  <button *ngIf="album && album.usuario" id="eliminar_album" type="button" class="btn btn-outline-danger me-1" (click)="eliminarAlbum()" title="Eliminar álbum"><i class="bi bi-trash-fill"></i></button>
+                </li>
+              </ul>
+          </div>
+      </nav>
     </div>
   </div>
-
   <div class="row mt-2">
     <div class="col-12 col-sm-6 col-md-6 ">
       <div class="card ionic-card">
