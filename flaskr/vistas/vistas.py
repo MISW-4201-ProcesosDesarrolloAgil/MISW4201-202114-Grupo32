@@ -132,7 +132,7 @@ class VistaCompartirAlbum_Implementacion:
 class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
     @jwt_required()
     def post(self, id_usuario):
-        return super().post(id_usuario,request)
+        return super().post(id_usuario)
     def get(self, id_usuario):
         return super().get(id_usuario)
 
