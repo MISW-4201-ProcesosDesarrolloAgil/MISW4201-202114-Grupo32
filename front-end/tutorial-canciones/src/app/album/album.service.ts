@@ -21,6 +21,13 @@ export class AlbumService {
     return this.http.get<Album[]>(`${this.backUrl}/usuario/${usuario}/albumes`, {headers: headers})
   }
 
+  getAlbumesCompartidos(usuario: number, token: string): Observable<Album[]>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get<Album[]>(`${this.backUrl}/usuario/${usuario}/albumes_compartidos`, {headers: headers})
+  }
+
   getCancionesAlbum(idAlbum: number, token: string): Observable<Cancion[]>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
