@@ -67,9 +67,8 @@ html body {
   width: 100% !important;
   height: auto !important;
   display: flex !important;
-  margin: 0em !important;
-  margin-top: 0.5em !important;
-  margin-bottom: 0.5em !important;
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
 }
 .ionic-li:hover {
   background: var(--rnr-mostaza) !important;
@@ -146,8 +145,8 @@ a {
 .img-menu {
   margin: auto;
   margin-right: 1em;
-  width: 2em;
-  height: auto;
+  height: 2em;
+  width: auto;
 }
 .wrapper {
   background-color: none;
@@ -205,6 +204,15 @@ a {
 }
 .line {
   border-bottom: double var(--rnr-cafe) !important;
+}
+
+#header{
+  width: auto;
+  height: 2em;
+  margin: auto;
+  padding-top: 0.5em;
+  border-bottom: double var(--rnr-cafe) !important;
+
 }
 
 @media (max-width: 768px) {
