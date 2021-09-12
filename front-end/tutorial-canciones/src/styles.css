@@ -4,7 +4,8 @@
   --rnr-beige: #f4eccb;
   --rnr-azul: #74ccac;
   --rnr-mostaza: #ebbb20;
-  --rnr-naranja: #d34c1c;
+  /* --rnr-naranja: #d34c1c; */
+  --rnr-naranja: #e5771e;
   /*
     #f4eccb beige
     #74ccac azul
@@ -14,10 +15,9 @@
     */
 }
 html body {
-  background-color: lightgray !important;
+  background-color: white !important;
 }
 .container {
-  /* background-color: green !important; */
   width: 90% !important;
   height: auto !important;
   margin: auto !important;
@@ -38,7 +38,6 @@ html body {
 .ionic-card-body {
   background-color: var(--rnr-beige) !important;
   overflow-x: auto;
-
 }
 .ionic-tr {
   width: 100% !important;
@@ -54,7 +53,6 @@ html body {
 }
 
 .ionic-tr:hover {
-
   background: var(--rnr-mostaza) !important;
 }
 
@@ -132,6 +130,25 @@ a {
   margin: 0px !important;
   margin-left: 1.5em !important;
   text-align: justify !important;
+}
+
+input {
+  font-size: 20px !important;
+  font-family: texto !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  color: var(--rnr-cafe) !important;
+}
+select {
+  font-size: 20px !important;
+  font-family: texto !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  color: var(--rnr-cafe) !important;
+}
+textarea {
+  font-size: 20px !important;
+  font-family: texto !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  color: var(--rnr-cafe) !important;
 }
 
 /*
@@ -222,10 +239,47 @@ a {
 .iconos:hover {
   background-color: var(--rnr-mostaza) !important;
   border-radius: 1em 1em 1em 1em !important;
-
 }
 
+/*
+Botones
+*/
+.btn-danger {
+  background-color: var(--rnr-mostaza) !important;
+  border-radius: 0.5em 0.5em 0.5em 0.5em !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  font-size: 20px !important;
+  align-self: center !important;
+  font-family: texto !important;
+  color: var(--rnr-cafe) !important;
+}
+.btn-primary {
+  background-color: var(--rnr-azul) !important;
+  border-radius: 0.5em 0.5em 0.5em 0.5em !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  font-size: 20px !important;
+  align-self: center !important;
+  font-family: texto !important;
+  color: var(--rnr-cafe) !important;
+}
 
+/*
+  Alertas
+*/
+.alert-danger {
+  /* background-color: var(--rnr-naranja) !important; */
+  border-radius: 0.5em 0.5em 0.5em 0.5em !important;
+  border: 1px solid var(--rnr-cafe) !important;
+  font-size: 20px !important;
+  align-self: center !important;
+  font-family: texto !important;
+  color: white !important;
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    var(--rnr-mostaza) 0,
+    var(--rnr-naranja) 100%
+  );
+}
 
 @media (max-width: 768px) {
   .texto-menu {

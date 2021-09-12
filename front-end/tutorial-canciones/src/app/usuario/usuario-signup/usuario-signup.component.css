@@ -1,7 +1,7 @@
 .div-1 {
   margin-top: 20px;
   padding: 20px;
-  background-color: #D34C1C;
+  background-color: var(--rnr-naranja)
 }
 .div-2 {
   margin-top: 20px;
@@ -9,7 +9,7 @@
   background-color: #FFFFFF;
 }
 .div-3 {
-  background-color: #D34C1C;
+  background-color: var(--rnr-naranja);
 }
 .center-block {
   display: block;

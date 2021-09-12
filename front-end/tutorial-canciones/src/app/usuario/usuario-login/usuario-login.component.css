@@ -1,15 +1,15 @@
 .div-1 {
   margin-top: 20px;
   padding: 20px;
-  background-color: #D34C1C;
+  background-color: var(--rnr-naranja);
 }
 .div-2 {
   margin-top: 20px;
   padding: 20px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 .div-3 {
-  background-color: #D34C1C;
+  background-color: var(--rnr-naranja);
 }
 .center-block {
   display: block;
@@ -23,4 +23,16 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+#titulo {
+  font-size: 35px !important;
+  color: white !important;
+  border-bottom: double white !important;
+}
+
+p {
+  color: white !important;
+}
+.img-rockola {
+  border-bottom: double var(--rnr-cafe) !important;
 }
