@@ -72,6 +72,9 @@ html body {
 .ionic-li:hover {
   background: var(--rnr-mostaza) !important;
 }
+.ionic-item {
+  background-color: var(--rnr-azul) !important;
+}
 
 /* .ionic-td:hover {
   background: var(--rnr-mostaza)!important

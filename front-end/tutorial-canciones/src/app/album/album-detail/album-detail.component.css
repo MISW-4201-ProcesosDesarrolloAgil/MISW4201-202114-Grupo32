@@ -16,3 +16,10 @@ p{
   margin-left: .2em !important;
 
 }
+
+.navbar-expand-sm .navbar-collapse {
+  justify-content: center;
+}
+form{
+text-align: center;
+}

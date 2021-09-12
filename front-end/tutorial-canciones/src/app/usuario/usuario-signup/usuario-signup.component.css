@@ -6,7 +6,7 @@
 .div-2 {
   margin-top: 20px;
   padding: 20px;
-  background-color: #FFFFFF;
+  background-color: none;
 }
 .div-3 {
   background-color: var(--rnr-naranja);
@@ -23,4 +23,7 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+.box{
+  width: 50%;
 }
