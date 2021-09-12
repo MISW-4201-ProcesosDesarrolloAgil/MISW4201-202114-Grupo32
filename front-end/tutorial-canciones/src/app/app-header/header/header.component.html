@@ -1,6 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-light" >
+<!-- <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarTogglerDemo01"
+      aria-controls="navbarTogglerDemo01"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse">
@@ -24,4 +32,44 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+
+<div id="header">
+  <h1>esto es un header</h1>
+</div>
+
+<div class="wrapper">
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h1>Menu</h1>
+    </div>
+    <ul class="list-unstyled components">
+      <li class="nav-item ionic-li" (click)="goTo('home')">
+        <p class="texto-menu">Home</p>
+        <img class="img-menu" src="/assets/rockola.png" alt="Home" />
+      </li>
+      <li class="nav-item ionic-li" (click)="goTo('album')">
+        <p class="texto-menu">Álbumes</p>
+        <img class="img-menu" src="/assets/rockola.png" alt="Álbumes" />
+      </li>
+      <li class="nav-item ionic-li" (click)="goTo('cancion')">
+        <p class="texto-menu">Canciones</p>
+        <img class="img-menu" src="/assets/rockola.png" alt="Canciones" />
+      </li>
+      <li class="nav-item ionic-li" (click)="goTo('about')">
+        <p class="texto-menu">Acerca de</p>
+        <img class="img-menu" src="/assets/rockola.png" alt="Acerca de" />
+      </li>
+      <div class="line"></div>
+      <li class="nav-item ionic-li" (click)="goTo('logIn')">
+        <p class="texto-menu">Salir</p>
+        <img class="img-menu" src="/assets/rockola.png" alt="Salir" />
+      </li>
+    </ul>
+  </nav>
+  <div class="content">
+    <button type="button" id="sidebarCollapse" class="btn btn-info">
+      <img class="img-navbar" src="/assets/rockola.png" alt="rockola" />
+    </button>
+  </div>
+</div>
