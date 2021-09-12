@@ -15,8 +15,13 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    $('#sidebarCollapse').on('click', function () {
-      $('#sidebar, #content').toggleClass('active');
+    // $('#sidebarCollapse').on('click', function () {
+    //   $('#sidebar, #content').toggleClass('active');
+    // });
+    $(document).ready(function () {
+      $("#sidebarCollapse").on('click', function () {
+        $("#sidebar").toggleClass('active');
+      });
     });
   }
 

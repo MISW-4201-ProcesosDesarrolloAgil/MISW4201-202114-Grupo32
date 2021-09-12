@@ -1,45 +1,74 @@
 <div class="container align-items-center">
   <div class="row align-items-center">
-    <div class="col-xs-10 col-lg-5 card px-2 div-1">
+    <!-- <div class="col-6" style="background-color: red">
+      <h1>Hola</h1>
+    </div>
+    <div class="col-6" style="background-color: green">
+      <h1>Hola2</h1>
+    </div> -->
+
+    <div class="col-xs-10 col-lg-6 card px-2 div-1">
       <div class="card-body text-center">
-        <h2 class="my-4" style="text-align:center"><strong>IONIC</strong></h2>
-        <img src="../assets/rockola.png" width="180" height="250">
-        <p class="my-4">El sitio para almacenar la información de su colección de música. En este podrá buscar de manera
-          más facil las canciones que tiene en su fonoteca y que quiere escuchar ...</p>
+        <h1 id="titulo" class="my-4" style="text-align: center">
+          <strong>IONIC</strong>
+        </h1>
+        <img class="img-rockola" src="../assets/rockola.png" />
+        <p class="my-4">
+          El sitio para almacenar la información de su colección de música. En
+          este podrá buscar de manera más facil las canciones que tiene en su
+          fonoteca y que quiere escuchar ...
+        </p>
       </div>
     </div>
 
-    <div class="col-xs-10 col-lg-6 container div-2">
-      <div class="row align-items-center">
+    <div class="col-xs-10 col-lg-6  div-2">
+      <div class="col-6 container div-2">
+        <div class="row align-items-center">
+          <div class="my-3 row">
+            <h1 class="text-center">Ingreso</h1>
+          </div>
+          <div *ngIf="error">
+            <div class="alert alert-danger" role="alert">
+              Usuario o contraseña incorrectos
+            </div>
+          </div>
 
-        <div class="my-3 row">
-          <h1 class="text-center">Ingreso</h1>
-        </div>
-        <div *ngIf="error">
-          <div class="alert alert-danger" role="alert">
-            Usuario o contraseña incorrectos
+          <div class="my-3 row">
+            <div class="col-lg-6 center-block">
+              <input
+                #usuario
+                type="text"
+                class="form-control"
+                placeholder="Usuario"
+              />
+            </div>
+          </div>
+
+          <div class="my-3 row">
+            <div class="col-lg-6 center-block">
+              <input
+                #contrasena
+                type="password"
+                class="form-control"
+                placeholder="Contraseña"
+              />
+            </div>
+          </div>
+          <div class="my-4">
+            <button
+              (click)="onLogInUsuario(usuario.value, contrasena.value)"
+              type="button"
+              class="btn btn-primary col-6 div-3 center-block"
+            >
+              Ingresar
+            </button>
+          </div>
+          <div>
+            <p style="text-align: center; color:black" >
+              ¿No tienes cuenta?: <a href="/signup">Registrate</a>
+            </p>
           </div>
         </div>
-
-        <div class="my-3 row">
-          <div class="col-lg-6 center-block">
-            <input #usuario type="text" class="form-control" placeholder="Usuario">
-          </div>
-        </div>
-
-        <div class="my-3 row">
-          <div class="col-lg-6 center-block">
-            <input #contrasena type="password" class="form-control" placeholder="Contraseña">
-          </div>
-        </div>
-        <div class="my-4">
-          <button (click)="onLogInUsuario(usuario.value, contrasena.value)" type="button"
-            class="btn btn-primary col-6 div-3 center-block">Ingresar</button>
-        </div>
-        <div>
-          <p style="text-align: center">¿No tienes cuenta?: <a href="/signup">Registrate</a></p>
-        </div>
-
       </div>
     </div>
   </div>
