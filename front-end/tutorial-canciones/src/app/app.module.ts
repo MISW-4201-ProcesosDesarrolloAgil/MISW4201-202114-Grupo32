@@ -10,15 +10,21 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { AlbumModule } from './album/album.module';
 import { AppHeaderModule } from './app-header/app-header.module';
 import { CancionModule } from './cancion/cancion.module';
+import { HomeModule } from './home/home.module';
+import { AboutModule } from './about/about.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    AppComponent,
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    HomeModule,
+    AboutModule,
     UsuarioModule,
     AlbumModule,
     CancionModule,
@@ -28,7 +34,8 @@ import { CancionModule } from './cancion/cancion.module';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

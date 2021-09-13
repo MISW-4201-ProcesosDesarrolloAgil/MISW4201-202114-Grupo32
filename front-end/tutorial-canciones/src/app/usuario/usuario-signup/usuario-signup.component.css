@@ -1,0 +1,29 @@
+.div-1 {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: var(--rnr-naranja)
+}
+.div-2 {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: none;
+}
+.div-3 {
+  background-color: var(--rnr-naranja);
+}
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.box{
+  width: 50%;
+}

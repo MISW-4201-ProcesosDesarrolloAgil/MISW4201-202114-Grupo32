@@ -9,6 +9,8 @@ import { CancionCreateComponent } from './cancion/cancion-create/cancion-create.
 import { CancionEditComponent } from './cancion/cancion-edit/cancion-edit.component';
 import { AlbumJoinCancionComponent } from './album/album-join-cancion/album-join-cancion.component';
 import { UsuarioSignupComponent } from './usuario/usuario-signup/usuario-signup.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,14 @@ const routes: Routes = [
     path: 'signup',
     component: UsuarioSignupComponent,
     pathMatch: 'full'
+  },
+  {
+    path: 'home/:userId/:userToken',
+    component: HomeComponent,
+  },
+  {
+    path: 'about/:userId/:userToken',
+    component: AboutComponent,
   },
   {
     path: 'albumes/:userId/:userToken',

@@ -1,0 +1,25 @@
+.navbar-brand.abs
+    {
+        position: absolute;
+        width: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+.titulo-tabla {
+  width: auto !important;
+}
+.contenido-tabla {
+  background-color: white ;
+}
+p{
+  margin-left: .2em !important;
+
+}
+
+.navbar-expand-sm .navbar-collapse {
+  justify-content: center;
+}
+form{
+text-align: center;
+}

@@ -10,15 +10,16 @@ album_schema = AlbumSchema()
 
 
 class VistaCanciones(Resource):
-
     def post(self):
-        nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"], segundos=request.json["segundos"], interprete=request.json["interprete"])
+        nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"],
+                                segundos=request.json["segundos"], interprete=request.json["interprete"])
         db.session.add(nueva_cancion)
         db.session.commit()
         return cancion_schema.dump(nueva_cancion)
 
     def get(self):
         return [cancion_schema.dump(ca) for ca in Cancion.query.all()]
+
 
 class VistaCancion(Resource):
 
@@ -27,10 +28,10 @@ class VistaCancion(Resource):
 
     def put(self, id_cancion):
         cancion = Cancion.query.get_or_404(id_cancion)
-        cancion.titulo = request.json.get("titulo",cancion.titulo)
-        cancion.minutos = request.json.get("minutos",cancion.minutos)
-        cancion.segundos = request.json.get("segundos",cancion.segundos)
-        cancion.interprete = request.json.get("interprete",cancion.interprete)
+        cancion.titulo = request.json.get("titulo", cancion.titulo)
+        cancion.minutos = request.json.get("minutos", cancion.minutos)
+        cancion.segundos = request.json.get("segundos", cancion.segundos)
+        cancion.interprete = request.json.get("interprete", cancion.interprete)
         db.session.commit()
         return cancion_schema.dump(cancion)
 
@@ -38,26 +39,28 @@ class VistaCancion(Resource):
         cancion = Cancion.query.get_or_404(id_cancion)
         db.session.delete(cancion)
         db.session.commit()
-        return '',204
+        return '', 204
+
 
 class VistaAlbumesCanciones(Resource):
     def get(self, id_cancion):
         cancion = Cancion.query.get_or_404(id_cancion)
         return [album_schema.dump(al) for al in cancion.albumes]
 
+
 class VistaSignIn(Resource):
-    
+
     def post(self):
-        nuevo_usuario = Usuario(nombre=request.json["nombre"], contrasena=request.json["contrasena"])
+        nuevo_usuario = Usuario(
+            nombre=request.json["nombre"], contrasena=request.json["contrasena"])
         db.session.add(nuevo_usuario)
         db.session.commit()
-        token_de_acceso = create_access_token(identity = nuevo_usuario.id)
-        return {"mensaje":"usuario creado exitosamente", "token":token_de_acceso}
-
+        token_de_acceso = create_access_token(identity=nuevo_usuario.id)
+        return {"mensaje": "usuario creado exitosamente", "token": token_de_acceso}
 
     def put(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
-        usuario.contrasena = request.json.get("contrasena",usuario.contrasena)
+        usuario.contrasena = request.json.get("contrasena", usuario.contrasena)
         db.session.commit()
         return usuario_schema.dump(usuario)
 
@@ -65,24 +68,27 @@ class VistaSignIn(Resource):
         usuario = Usuario.query.get_or_404(id_usuario)
         db.session.delete(usuario)
         db.session.commit()
-        return '',204
+        return '', 204
+
 
 class VistaLogIn(Resource):
 
     def post(self):
-        usuario = Usuario.query.filter(Usuario.nombre == request.json["nombre"], Usuario.contrasena == request.json["contrasena"]).first()
+        usuario = Usuario.query.filter(
+            Usuario.nombre == request.json["nombre"], Usuario.contrasena == request.json["contrasena"]).first()
         db.session.commit()
         if usuario is None:
             return "El usuario no existe", 404
         else:
-            token_de_acceso = create_access_token(identity = usuario.id)
-            return {"mensaje":"Inicio de sesión exitoso", "token": token_de_acceso}
+            token_de_acceso = create_access_token(identity=usuario.id)
+            return {"mensaje": "Inicio de sesión exitoso", "token": token_de_acceso}
 
-class VistaAlbumsUsuario(Resource):
 
-    @jwt_required()
+class VistaAlbumsUsuario_implementacion:
+
     def post(self, id_usuario):
-        nuevo_album = Album(titulo=request.json["titulo"], anio=request.json["anio"], descripcion=request.json["descripcion"], medio=request.json["medio"])
+        nuevo_album = Album(titulo=request.json["titulo"], anio=request.json["anio"],
+                            descripcion=request.json["descripcion"], medio=request.json["medio"])
         usuario = Usuario.query.get_or_404(id_usuario)
         usuario.albumes.append(nuevo_album)
 
@@ -90,37 +96,87 @@ class VistaAlbumsUsuario(Resource):
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            return 'El usuario ya tiene un album con dicho nombre',409
+            return 'El usuario ya tiene un album con dicho nombre', 409
 
         return album_schema.dump(nuevo_album)
 
-    @jwt_required()
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
         return [album_schema.dump(al) for al in usuario.albumes]
+
+
+class VistaCompartirAlbum_Implementacion:
+    def post(self, id_album, id_usuarios):
+        album = Album.query.get_or_404(id_album)
+        usuarios = [Usuario.query.get_or_404(
+            id_usuario) for id_usuario in id_usuarios]
+        for usuario in usuarios:
+            if any(compartido.id == usuario.id for compartido in album.compartido_a):
+                db.session.rollback()
+                return f"Error: El album {album.titulo} ya fue compartido a {usuario.nombre}.", 409
+
+            if album.usuario == usuario.id:
+                db.session.rollback()
+                return f"Error: No se puedes compartir un album a su mismo propietario.", 409
+
+            album.compartido_a.append(usuario)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return 'Se generó un error al tratar de compartir el album', 409
+
+        return album_schema.dump(album)
+
+
+class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
+    @jwt_required()
+    def post(self, id_usuario):
+        return super().post(id_usuario)
+    def get(self, id_usuario):
+        return super().get(id_usuario)
+
+class VistaAlbumsCompartidosUsuario_implementacion(Resource):
+    def get(self, id_usuario):
+        usuario = Usuario.query.get_or_404(id_usuario)
+        return [album_schema.dump(al) for al in usuario.albumes_compartidos]
+
+class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion,Resource):
+    @jwt_required()
+    def get(self, id_usuario):
+        return super().get(id_usuario)
+
+
+class VistaCompartirAlbum(VistaCompartirAlbum_Implementacion, Resource):
+    @jwt_required()
+    def post(self, id_album):
+        return super().post(id_album, request.json["id_usuarios"])
+
 
 class VistaCancionesAlbum(Resource):
 
     def post(self, id_album):
         album = Album.query.get_or_404(id_album)
-        
+
         if "id_cancion" in request.json.keys():
-            
+
             nueva_cancion = Cancion.query.get(request.json["id_cancion"])
             if nueva_cancion is not None:
                 album.canciones.append(nueva_cancion)
                 db.session.commit()
             else:
-                return 'Canción errónea',404
-        else: 
-            nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"], segundos=request.json["segundos"], interprete=request.json["interprete"])
+                return 'Canción errónea', 404
+        else:
+            nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"],
+                                    segundos=request.json["segundos"], interprete=request.json["interprete"])
             album.canciones.append(nueva_cancion)
         db.session.commit()
         return cancion_schema.dump(nueva_cancion)
-       
+
     def get(self, id_album):
         album = Album.query.get_or_404(id_album)
         return [cancion_schema.dump(ca) for ca in album.canciones]
+
 
 class VistaAlbum(Resource):
 
@@ -129,7 +185,7 @@ class VistaAlbum(Resource):
 
     def put(self, id_album):
         album = Album.query.get_or_404(id_album)
-        album.titulo = request.json.get("titulo",album.titulo)
+        album.titulo = request.json.get("titulo", album.titulo)
         album.anio = request.json.get("anio", album.anio)
         album.descripcion = request.json.get("descripcion", album.descripcion)
         album.medio = request.json.get("medio", album.medio)
@@ -140,5 +196,19 @@ class VistaAlbum(Resource):
         album = Album.query.get_or_404(id_album)
         db.session.delete(album)
         db.session.commit()
-        return '',204
+        return '', 204
 
+
+def info_usuario_simple(usuario):
+    return {"id": usuario.id, "nombre": usuario.nombre}
+
+
+class VistaUsuarios_Implementacion:
+    def get(self):
+        return [info_usuario_simple(us) for us in Usuario.query.all()]
+
+
+class VistaUsuarios(VistaUsuarios_Implementacion, Resource):
+    @jwt_required()
+    def get(self):
+        return super().get()

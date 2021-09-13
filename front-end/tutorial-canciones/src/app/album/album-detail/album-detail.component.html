@@ -1,54 +1,135 @@
-<div class="container">
+<div class="card ionic-card" style="background-color: white">
+  <div class="card-header ionic-card-header">
+    <div class="row">
+      <div class="col-12 text-center mb-2">
+        <label class="fs-4 fw-bold">
+          <h1>Álbum: {{ album?.titulo }} ({{ album?.anio }})</h1>
+        </label>
 
-  <div class="row">
-    <div class="col-12 text-center mb-2" >
-      <label class="fs-4 fw-bold">Álbum: {{album?.titulo}} ({{album?.anio}})</label>
-      <button *ngIf="album" type="button" class="btn btn-outline-success ms-3 me-2" (click)="goToEdit()" title="Editar álbum"><i class="bi bi-pencil-square"></i></button>
-      <button *ngIf="album" type="button" class="btn btn-outline-info me-1 me-2" (click)="goToJoinCancion()" title="Agregar canción" ><i class="bi bi-plus" ></i><i class="bi bi-music-note"></i></button>
-      <button *ngIf="album" type="button" class="btn btn-outline-danger me-1" (click)="eliminarAlbum()" title="Eliminar álbum"><i class="bi bi-trash-fill"></i></button>
+        <nav class="navbar navbar-expand-sm ">
+          <div class="navbar navbar-collapse ">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item dropdown" id="compartir_album" *ngIf="album && album.usuario">
+                <img class="iconos" src="/assets/send.png" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false" (click)="compartirAlbum()" title="Compartir album" />
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <form>
+                    <label class="dropdown-item ionic-item" style="text-align: center;">Compartir a usuarios</label>
+                    <div class="dropdown-divider"></div>
+                    <div *ngIf="userList.length > 0; else notUsers">
+                      <div *ngFor="let user of userList" class="dropdown-item"><input type="checkbox" [value]="user.id"
+                          (change)="onCheckboxChange($event)"> {{user.nombre}}</div>
+                    </div>
+                    <ng-template #notUsers><label class="dropdown-item" style="text-align: center; color: gray;">No hay
+                        usuarios</label></ng-template>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item "                      class="btn btn-primary"
+                     (click)="onSubmitCompartirAlbum()">Enviar</a>
+                    <!-- <button
+                    class="btn btn-primary"
+                    style="text-align: center;"
+                    (click)="onSubmitCompartirAlbum()"
+                  >
+                  Enviar
+                  </button> -->
+                  </form>
+                </div>
+              </li>
+              <li class="nav-item" *ngIf="album && album.usuario">
+                <img class="iconos" id='editar_album' (click)="goToEdit()" src="/assets/edit.png" alt="crear" />
+              </li>
+              <li class="nav-item" *ngIf="album && album.usuario">
+                <img class="iconos" (click)="goToJoinCancion()" src="/assets/add.png" alt="crear" />
+              </li>
+              <li class="nav-item" *ngIf="album && album.usuario">
+                <img class="iconos" id='eliminar_album' type="button" (click)="eliminarAlbum()" src="/assets/delete.png"
+                  alt="crear" />
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+
+
+
+
+      </div>
     </div>
   </div>
 
+  <!-- <div class="container">
+    <div class="row"> -->
+
+  <!-- </div>
+    </div> -->
+
+
+
   <div class="row mt-2">
-    <div class="col-6">
-      <div class="card">
-        <div class="card-body">
-          <p><span class="fw-bold">Medio: </span> <span class="text-capitalize">{{album?.medio?.llave}}</span></p>
-          <p>{{album?.descripcion}}</p>
+    <div class="col-12 col-sm-6 col-md-6 ">
+      <div class="card ionic-card">
+        <div class="card-header ionic-card-header">
+          <h2>
+            <span class="fw-bold">Medio: </span>
+            <span class="text-capitalize">{{ album?.medio?.llave }}</span>
+          </h2>
+        </div>
+        <div class="card-body ionic-card-body">
+          <div class="ionic-td">
+            <p>{{ album?.descripcion }}</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-6">
-      <div class="card">
-        <div class="card-body">
-          <p class="fw-bold">Intérpretes:</p>
+    <div class="col-12 col-sm-6 col-md-6">
+      <div class="card ionic-card">
+        <div class="card-header ionic-card-header">
+          <h2 class="fw-bold">Intérpretes:</h2>
+        </div>
+        <div class="card-body ionic-card-body">
           <ul class="mt-0">
-            <li class="my-1" *ngFor="let interprete of album?.interpretes">{{interprete}}</li>
+            <li class="my-1 ionic-td" *ngFor="let interprete of album?.interpretes">
+              <p>{{ interprete }}</p>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-12 mt-3 mb-2 ms-2">
-      <h5>Canciones</h5>
+  <div class="row card ionic-card">
+    <div class="card-header ionic-card-header">
+      <div class="col-12 mt-3 mb-2 ms-2">
+        <h2>Canciones</h2>
+      </div>
     </div>
-    <div class="col-12">
-      <table class="table table-hover table-bordered" >
+    <div class="col-12 card-body ionic-card-body">
+      <table class="table table-hover table-bordered">
         <thead class="table-light">
           <tr>
-            <th scope="col" class="text-center">Canción</th>
-            <th scope="col" class="text-center">Duración</th>
-            <th scope="col" class="text-center">Intérprete</th>
+            <th scope="col" class="text-center ionic-td titulo-tabla">
+              <h2>Canción</h2>
+            </th>
+            <th scope="col" class="text-center ionic-td titulo-tabla">
+              <h2>Duración</h2>
+            </th>
+            <th scope="col" class="text-center ionic-td titulo-tabla">
+              <h2>Intérprete</h2>
+            </th>
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let cancion of album?.canciones" >
-              <td >{{cancion.titulo}}</td>
-              <td class="text-center">{{cancion.minutos}}:{{cancion.segundos}}</td>
-              <td >{{cancion.interprete}}</td>
-            </tr>
+          <tr *ngFor="let cancion of album?.canciones">
+            <td class="contenido-tabla">
+              <p>{{ cancion.titulo }}</p>
+            </td>
+            <td class="text-center contenido-tabla">
+              <p>{{ cancion.minutos }}:{{ cancion.segundos }}</p>
+            </td>
+            <td class="contenido-tabla">
+              <p>{{ cancion.interprete }}</p>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

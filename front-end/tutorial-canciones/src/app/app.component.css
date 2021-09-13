@@ -1,0 +1,7 @@
+.raiz {
+  width: 100%;
+  height: auto;
+  /* background-color: var(--rnr-cafe); */
+  /* background: white; */
+  background-image: linear-gradient(0deg, white 0, var(--rnr-mostaza) 100%);
+}
