@@ -68,7 +68,6 @@ export class AlbumListComponent implements OnInit {
   getAlbumesCompartidos():void{
     this.albumService.getAlbumesCompartidos(this.userId, this.token)
     .subscribe(albumes => {
-      console.log(albumes)
       this.albumes = albumes
       this.mostrarAlbumesCompartidos = albumes
       if(albumes.length>0){
