@@ -37,7 +37,8 @@ class Album(db.Model):
     usuario = db.Column(db.Integer, db.ForeignKey("usuario.id"))
     canciones = db.relationship('Cancion', secondary = 'album_cancion', back_populates="albumes")
     compartido_a = db.relationship('Usuario', secondary = 'albumes_compartidos', back_populates="albumes_compartidos")
-    
+
+
 class Usuario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50))

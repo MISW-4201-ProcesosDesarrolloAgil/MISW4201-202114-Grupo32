@@ -8,7 +8,6 @@ cancion_schema = CancionSchema()
 usuario_schema = UsuarioSchema()
 album_schema = AlbumSchema()
 
-
 class VistaCanciones(Resource):
     def post(self):
         nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"],
@@ -133,15 +132,23 @@ class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
     @jwt_required()
     def post(self, id_usuario):
         return super().post(id_usuario)
+
     def get(self, id_usuario):
         return super().get(id_usuario)
+
 
 class VistaAlbumsCompartidosUsuario_implementacion(Resource):
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
-        return [album_schema.dump(al) for al in usuario.albumes_compartidos]
+        albums = []
+        for al in usuario.albumes_compartidos:
+            album_compartido = album_schema.dump(al) 
+            album_compartido["nombre_dueno"] = Usuario.query.get(al.usuario).nombre
+            albums.append(album_compartido)
+        return albums
 
-class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion,Resource):
+
+class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion, Resource):
     @jwt_required()
     def get(self, id_usuario):
         return super().get(id_usuario)

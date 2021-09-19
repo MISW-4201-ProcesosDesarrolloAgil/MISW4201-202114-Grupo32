@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Album} from './album';
+import { Album, AlbumCompartido} from './album';
 import { Cancion } from '../cancion/cancion';
 import { environment } from 'src/environments/environment';
 
@@ -21,11 +21,11 @@ export class AlbumService {
     return this.http.get<Album[]>(`${this.backUrl}/usuario/${usuario}/albumes`, {headers: headers})
   }
 
-  getAlbumesCompartidos(usuario: number, token: string): Observable<Album[]>{
+  getAlbumesCompartidos(usuario: number, token: string): Observable<AlbumCompartido[]>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.get<Album[]>(`${this.backUrl}/usuario/${usuario}/albumes_compartidos`, {headers: headers})
+    return this.http.get<AlbumCompartido[]>(`${this.backUrl}/usuario/${usuario}/albumes_compartidos`, {headers: headers})
   }
 
   getCancionesAlbum(idAlbum: number, token: string): Observable<Cancion[]>{
