@@ -37,7 +37,7 @@ export class CancionListComponent implements OnInit {
   }
 
   getCanciones():void{
-    this.cancionService.getCanciones()
+    this.cancionService.getCanciones(this.userId)
     .subscribe(canciones => {
       this.canciones = canciones
       this.mostrarCanciones = canciones
@@ -55,7 +55,7 @@ export class CancionListComponent implements OnInit {
     error => {
       this.showError(`Ha ocurrido un error: ${error.message}`)
     })
-    
+
   }
 
   buscarCancion(busqueda: string){
@@ -69,7 +69,7 @@ export class CancionListComponent implements OnInit {
   }
 
   eliminarCancion(){
-    this.cancionService.eliminarCancion(this.cancionSeleccionada.id)
+    this.cancionService.eliminarCancion(this.cancionSeleccionada.id, this.token)
     .subscribe(cancion => {
       this.ngOnInit()
       this.showSuccess()

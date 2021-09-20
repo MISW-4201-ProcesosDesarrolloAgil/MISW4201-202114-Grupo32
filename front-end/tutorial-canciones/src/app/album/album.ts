@@ -1,26 +1,15 @@
 export class Album {
-
-    id: number;
-    titulo: string;
-    anio: number;
-    descripcion: string;
-    medio: Medio;
-    usuario: number;
-    interpretes: Array<string>;
-    canciones: Array<Cancion>;
-    compartido_a: Array<number>;
-    es_compartido: boolean;
-
+    private es_compartido: boolean;
     constructor(
-        id: number,
-        titulo: string,
-        anio: number,
-        descripcion: string,
-        medio: Medio,
-        usuario: number,
-        interpretes: Array<string>,
-        canciones: Array<Cancion>,
-        compartido_a: Array<number>
+        public id: number,
+        public titulo: string,
+        public anio: number,
+        public descripcion: string,
+        public medio: Medio,
+        public usuario: number,
+        public interpretes: Array<string>,
+        public canciones: Array<Cancion>,
+        public compartido_a: Array<number>
     ){
         this.id = id;
         this.titulo = titulo;
@@ -68,4 +57,20 @@ export class Cancion{
         this.segundos = segundos,
         this.interprete = interprete
     }
+}
+
+export class AlbumCompartido extends Album{
+  constructor(
+    public id: number,
+    public titulo: string,
+    public anio: number,
+    public descripcion: string,
+    public medio: Medio,
+    public usuario: number,
+    public interpretes: Array<string>,
+    public canciones: Array<Cancion>,
+    public compartido_a: Array<number>,
+    public nombre_dueno: String){
+      super(id, titulo, anio, descripcion, medio, usuario, interpretes, canciones, compartido_a)
+  }
 }

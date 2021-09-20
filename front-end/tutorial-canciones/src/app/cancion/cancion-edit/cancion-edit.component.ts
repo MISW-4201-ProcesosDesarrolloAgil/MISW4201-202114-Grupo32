@@ -53,7 +53,7 @@ export class CancionEditComponent implements OnInit {
   editarCancion(newCancion: Cancion){
     this.cancionForm.get('minutos')?.setValue(parseInt(this.cancionForm.get('minutos')?.value))
     this.cancionForm.get('segundos')?.setValue(parseInt(this.cancionForm.get('segundos')?.value))
-    this.cancionService.editarCancion(newCancion, this.cancionId)
+    this.cancionService.editarCancion(newCancion, this.cancionId, this.token)
     .subscribe(cancion => {
       this.showSuccess(cancion)
       this.cancionForm.reset()

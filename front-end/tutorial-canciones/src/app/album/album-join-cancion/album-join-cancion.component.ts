@@ -19,7 +19,8 @@ export class AlbumJoinCancionComponent implements OnInit {
   albumId: number;
   album: Album;
   albumCancionForm !: FormGroup;
-  canciones: Array<Cancion>
+  canciones: Array<Cancion>;
+  isLoaded: boolean
 
   constructor(
     private albumService: AlbumService,
@@ -28,7 +29,9 @@ export class AlbumJoinCancionComponent implements OnInit {
     private router: ActivatedRoute,
     private routerPath: Router,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.isLoaded = false;
+  }
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -53,15 +56,17 @@ export class AlbumJoinCancionComponent implements OnInit {
 
   getCanciones(cancionesAlbum: Array<any>){
     let cancionesNoAgregadas: Array<Cancion> = []
-    this.cancionService.getCanciones()
+    this.cancionService.getCanciones(this.userId)
     .subscribe(canciones => {
       canciones.map(c => {
         if(!cancionesAlbum.includes(c.id)){
           cancionesNoAgregadas.push(c)
         }
       })
+      this.canciones = cancionesNoAgregadas
+      this.isLoaded = true
     })
-    this.canciones = cancionesNoAgregadas
+
   }
 
   cancelarAsociacion(){

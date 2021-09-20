@@ -15,33 +15,42 @@ export class CancionService {
 
   getCancionesAlbum(idAlbum: number, token: string): Observable<Cancion[]>{
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`       
+      'Authorization': `Bearer ${token}`
     })
     return this.http.get<Cancion[]>(`${this.backUrl}/album/${idAlbum}/canciones`, {headers: headers})
   }
 
-  getCanciones(): Observable<Cancion[]>{
-    return this.http.get<Cancion[]>(`${this.backUrl}/canciones`)
+  getCanciones(id_usuario: number): Observable<Cancion[]>{
+    return this.http.get<Cancion[]>(`${this.backUrl}/canciones/usuario/${id_usuario}`)
   }
 
   getAlbumesCancion(cancionId: number): Observable<Album[]>{
     return this.http.get<Album[]>(`${this.backUrl}/cancion/${cancionId}/albumes`)
   }
 
-  crearCancion(cancion: Cancion):Observable<Cancion>{
-    return this.http.post<Cancion>(`${this.backUrl}/canciones`, cancion)
+  crearCancion( id_usuario: number, cancion: Cancion, token: string):Observable<Cancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.post<Cancion>(`${this.backUrl}/canciones/usuario/${id_usuario}`, cancion, {headers: headers})
   }
 
   getCancion(cancionId: number): Observable<Cancion>{
     return this.http.get<Cancion>(`${this.backUrl}/cancion/${cancionId}`)
   }
 
-  editarCancion(cancion: Cancion, cancionId: number):Observable<Cancion>{
-    return this.http.put<Cancion>(`${this.backUrl}/cancion/${cancionId}`, cancion)
+  editarCancion(cancion: Cancion, cancionId: number, token: string):Observable<Cancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.put<Cancion>(`${this.backUrl}/cancion/${cancionId}`, cancion, {headers: headers})
   }
 
-  eliminarCancion(cancionId: number): Observable<Cancion>{
-    return this.http.delete<Cancion>(`${this.backUrl}/cancion/${cancionId}`)
+  eliminarCancion(cancionId: number, token: string): Observable<Cancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.delete<Cancion>(`${this.backUrl}/cancion/${cancionId}`, {headers: headers})
   }
 
 }

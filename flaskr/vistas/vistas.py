@@ -8,17 +8,19 @@ cancion_schema = CancionSchema()
 usuario_schema = UsuarioSchema()
 album_schema = AlbumSchema()
 
-
 class VistaCanciones(Resource):
-    def post(self):
+    @jwt_required()
+    def post(self, id_usuario):
         nueva_cancion = Cancion(titulo=request.json["titulo"], minutos=request.json["minutos"],
                                 segundos=request.json["segundos"], interprete=request.json["interprete"])
+        Usuario.query.get_or_404(id_usuario)
+        nueva_cancion.usuario = id_usuario
         db.session.add(nueva_cancion)
         db.session.commit()
         return cancion_schema.dump(nueva_cancion)
 
-    def get(self):
-        return [cancion_schema.dump(ca) for ca in Cancion.query.all()]
+    def get(self, id_usuario):
+        return [cancion_schema.dump(ca) for ca in Cancion.query.all() if id_usuario == ca.usuario]
 
 
 class VistaCancion(Resource):
@@ -26,6 +28,7 @@ class VistaCancion(Resource):
     def get(self, id_cancion):
         return cancion_schema.dump(Cancion.query.get_or_404(id_cancion))
 
+    @jwt_required()
     def put(self, id_cancion):
         cancion = Cancion.query.get_or_404(id_cancion)
         cancion.titulo = request.json.get("titulo", cancion.titulo)
@@ -35,6 +38,7 @@ class VistaCancion(Resource):
         db.session.commit()
         return cancion_schema.dump(cancion)
 
+    @jwt_required()
     def delete(self, id_cancion):
         cancion = Cancion.query.get_or_404(id_cancion)
         db.session.delete(cancion)
@@ -133,15 +137,23 @@ class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
     @jwt_required()
     def post(self, id_usuario):
         return super().post(id_usuario)
+
     def get(self, id_usuario):
         return super().get(id_usuario)
+
 
 class VistaAlbumsCompartidosUsuario_implementacion(Resource):
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
-        return [album_schema.dump(al) for al in usuario.albumes_compartidos]
+        albums = []
+        for al in usuario.albumes_compartidos:
+            album_compartido = album_schema.dump(al) 
+            album_compartido["nombre_dueno"] = Usuario.query.get(al.usuario).nombre
+            albums.append(album_compartido)
+        return albums
 
-class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion,Resource):
+
+class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion, Resource):
     @jwt_required()
     def get(self, id_usuario):
         return super().get(id_usuario)
@@ -212,3 +224,30 @@ class VistaUsuarios(VistaUsuarios_Implementacion, Resource):
     @jwt_required()
     def get(self):
         return super().get()
+
+class VistaCompartirCancion_Implementacion:
+    def post(self, id_cancion, id_usuarios):
+        cancion = Cancion.query.get_or_404(id_cancion)
+        usuarios = [Usuario.query.get_or_404(id_usuario) for id_usuario in id_usuarios]
+        for usuario in usuarios:
+            if any(compartido.id == usuario.id for compartido in cancion.compartido_a):
+                db.session.rollback()
+                return f"Error: El album {cancion.titulo} ya fue compartido a {usuario.nombre}.", 409
+
+            if cancion.usuario == usuario.id:
+                db.session.rollback()
+                return f"Error: No se puedes compartir una cacion a su mismo propietario.", 409
+
+            cancion.compartido_a.append(usuario)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return 'Se generó un error al tratar de compartir la cacion', 409
+
+        return cancion_schema.dump(cancion)
+
+class VistaCompartirCancion(VistaCompartirCancion_Implementacion, Resource):
+    @jwt_required()
+    def post(self, id_cancion):
+        return super().post(id_cancion, request.json["id_usuarios"])
