@@ -39,7 +39,10 @@ export class CancionListComponent implements OnInit {
   getCanciones():void{
     this.cancionService.getCanciones(this.userId)
     .subscribe(canciones => {
-      this.canciones = canciones
+      this.canciones = canciones.map(cancion => {
+        cancion.usuario = this.userId;
+        return cancion;
+      })
       this.mostrarCanciones = canciones
       this.onSelect(this.mostrarCanciones[0], 0)
     })

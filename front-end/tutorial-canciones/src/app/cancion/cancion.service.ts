@@ -53,4 +53,11 @@ export class CancionService {
     return this.http.delete<Cancion>(`${this.backUrl}/cancion/${cancionId}`, {headers: headers})
   }
 
+  compartirCancion(token:string, cancion: Cancion, usuarios: Array<number>): Observable<Cancion>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.post<Cancion>(`${this.backUrl}/compartir/cancion/${cancion.id}`, {"id_usuarios": usuarios}, {headers: headers})
+  }
+
 }
