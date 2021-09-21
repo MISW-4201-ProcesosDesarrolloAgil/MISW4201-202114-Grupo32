@@ -7,6 +7,7 @@ export class Cancion {
         public interprete: string,
         public albumes: Array<any>,
         public usuario: number,
+        public compartido_a: Array<number>
     ){
     }
 }
