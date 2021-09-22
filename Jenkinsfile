@@ -52,8 +52,7 @@ pipeline {
                 script {
                     docker.image('python:3.7.6').inside {
                         sh '''
-                            cd flaskr
-                            python -m unittest discover -s tests -v
+                            python -m unittest discover -s flaskr/tests -v
                         '''
                     }
                 }
@@ -64,8 +63,7 @@ pipeline {
                 script {
                     docker.image('python:3.7.6').inside {
                         sh '''
-                            cd flaskr
-                            python -m coverage run -m unittest discover -s tests -v
+                            python -m coverage run -m unittest discover -s flaskr/tests -v
                             python -m coverage html
                         ''' 
                     }
@@ -77,7 +75,7 @@ pipeline {
                 publishHTML (target : [allowMissing: false,
                     alwaysLinkToLastBuild: true,
                     keepAll: true,
-                    reportDir: 'flaskr/htmlcov/',
+                    reportDir: 'htmlcov/',
                     reportFiles: 'index.html',
                     reportName: 'Coverage Report',
                     reportTitles: 'Coverage Report']
