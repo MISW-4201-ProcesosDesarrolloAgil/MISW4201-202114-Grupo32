@@ -89,17 +89,6 @@ export class AlbumListComponent implements OnInit {
   }
 
   onSelect(a: Album, index: number, compartido:boolean){
-    /*$("#editar_album").show();
-    $("#eliminar_album").show();
-    $("#agregar_cancion").show();
-    $("#compartir_album").show();
-    if(compartido){
-      $("#eliminar_album").hide();
-      $("#editar_album").hide();
-      $("#agregar_cancion").hide();
-      $("#compartir_album").hide();
-    }*/
-
     this.indiceSeleccionado = index
     this.albumSeleccionado = a
     this.albumService.getCancionesAlbum(a.id, this.token)
