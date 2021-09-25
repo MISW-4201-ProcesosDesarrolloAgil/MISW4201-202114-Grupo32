@@ -21,7 +21,9 @@ export class CancionListComponent implements OnInit {
   userId: number
   token: string
   canciones: Array<Cancion>
+  cancionesCompartidas: Array<Cancion>
   mostrarCanciones: Array<Cancion>
+  mostrarCancionesCompartidas: Array<Cancion>
   cancionSeleccionada: Cancion
   indiceSeleccionado: number = 0
 
@@ -33,17 +35,34 @@ export class CancionListComponent implements OnInit {
       this.userId = parseInt(this.router.snapshot.params.userId)
       this.token = this.router.snapshot.params.userToken
       this.getCanciones();
+      this.getCancionesCompartidas();
     }
   }
 
   getCanciones():void{
-    this.cancionService.getCanciones()
+    this.cancionService.getCanciones(this.userId)
     .subscribe(canciones => {
-      this.canciones = canciones
+      this.canciones = canciones.map(cancion => {
+        cancion.usuario = this.userId;
+        return cancion;
+      })
       this.mostrarCanciones = canciones
       this.onSelect(this.mostrarCanciones[0], 0)
     })
   }
+
+  getCancionesCompartidas():void{
+    this.cancionService.getCancionesCompartidas(this.userId, this.token)
+    .subscribe(canciones => {
+      this.cancionesCompartidas = canciones.map(cancion => {
+        cancion.usuario = this.userId;
+        return cancion;
+      })
+      this.mostrarCancionesCompartidas = canciones
+      this.onSelect(this.mostrarCancionesCompartidas[0], 0)
+    })
+  }
+
 
   onSelect(cancion: Cancion, indice: number){
     this.indiceSeleccionado = indice
@@ -55,7 +74,7 @@ export class CancionListComponent implements OnInit {
     error => {
       this.showError(`Ha ocurrido un error: ${error.message}`)
     })
-    
+
   }
 
   buscarCancion(busqueda: string){
@@ -69,7 +88,7 @@ export class CancionListComponent implements OnInit {
   }
 
   eliminarCancion(){
-    this.cancionService.eliminarCancion(this.cancionSeleccionada.id)
+    this.cancionService.eliminarCancion(this.cancionSeleccionada.id, this.token)
     .subscribe(cancion => {
       this.ngOnInit()
       this.showSuccess()

@@ -4,21 +4,9 @@ on:
     branches:
       - dev
 jobs:
-  check-commit:
-    name: Check Commit Message
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check Commit Type
-        uses: gsactions/commit-message-checker@v1
-        with:
-          pattern: "^RELEASE:*"
-          flags: "u"
-          error: "The last push of this feature is not ready to be merged with the main branch."
   pruebas-flask:
     name: Pruebas Flask
     runs-on: ubuntu-latest
-    needs:
-      - check-commit
     steps:
       - name: Checkout de repositorio
         uses: actions/checkout@v2
@@ -39,8 +27,6 @@ jobs:
   pruebas-angular:
     name: Pruebas Angular
     runs-on: ubuntu-latest
-    needs:
-      - check-commit
     steps:
       - name: Checkout de repositorio
         uses: actions/checkout@v2
@@ -69,6 +55,7 @@ jobs:
     steps:
       - name: Create release
         uses: peterjgrainger/action-create-branch@v2.0.1
+        if: "contains(github.event.head_commit.message, 'RELEASE:')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

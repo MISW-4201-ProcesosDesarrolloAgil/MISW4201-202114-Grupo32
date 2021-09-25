@@ -3,8 +3,38 @@
   <div class="row">
     <div class="col-12 text-center mb-2" >
       <label class="fs-4 fw-bold">Canción: {{cancion?.titulo}}</label>
-      <button *ngIf="cancion" type="button" class="btn btn-outline-success ms-3 me-2" (click)="goToEdit()" title="Editar canción"><i class="bi bi-pencil-square"></i></button>
-      <button *ngIf="cancion" type="button" class="btn btn-outline-danger me-1" (click)="eliminarCancion()" title="Eliminar canción"><i class="bi bi-trash-fill"></i></button>
+      <nav class="navbar navbar-expand-sm ">
+        <div class="navbar navbar-collapse ">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown" id="compartir_album" *ngIf="cancion && cancion.usuario">
+              <img class="iconos" src="/assets/send.png" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false" (click)="compartirCancion()" title="Compartir album" />
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <form>
+                  <label class="dropdown-item ionic-item" style="text-align: center;">Compartir a usuarios</label>
+                  <div class="dropdown-divider"></div>
+                  <div *ngIf="userList.length > 0; else notUsers">
+                    <div *ngFor="let user of userList" class="dropdown-item"><input type="checkbox" [value]="user.id"
+                        (change)="onCheckboxChange($event)"> {{user.nombre}}</div>
+                  </div>
+                  <ng-template #notUsers><label class="dropdown-item" style="text-align: center; color: gray;">No hay
+                      usuarios</label></ng-template>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item "                      class="btn btn-primary"
+                   (click)="onSubmitCompartirCancion()">Enviar</a>
+                </form>
+              </div>
+            </li>
+            <li class="nav-item" *ngIf="cancion && cancion.usuario">
+              <img class="iconos" id='editar_cancion' (click)="goToEdit()" src="/assets/edit.png" alt="crear" />
+            </li>
+            <li class="nav-item" *ngIf="cancion && cancion.usuario">
+              <img class="iconos" id='eliminar_cancion' type="button" (click)="eliminarCancion()" src="/assets/delete.png"
+                alt="crear" />
+            </li>
+          </ul>
+        </div>
+      </nav>
     </div>
   </div>
 
