@@ -7,7 +7,7 @@ import {
 
 import { AlbumService } from './album.service';
 import { environment } from 'src/environments/environment';
-import { Album, Medio } from './album';
+import { Album, Comentario, Medio } from './album';
 import * as faker from 'faker'
 
 describe('Service: Album', () => {
@@ -69,6 +69,27 @@ describe('Service: Album', () => {
     }
 
     req.flush(mokPosts);
+  });
+
+  it('enviarComentario()', () => {
+
+    let token = faker.datatype.uuid();
+    let usuarios = [1,2]
+    let albums = [1,2]
+    let comentario = faker.lorem.words(10);
+    let fecha = new Date();
+
+    let mockComentario: Comentario = new Comentario(comentario, fecha.toISOString() , usuarios[0], albums[0]  );
+
+
+    service.enviarComentario(token, mockComentario).subscribe(comentario => {
+      expect(comentario).toBeInstanceOf(Comentario);
+    });
+
+    const req = httpMock.expectOne(`${apiUrl}/album/${mockComentario.album_id}/comentario`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.headers.get("Authorization")).toBe(`Bearer ${token}`);
+    req.flush(mockComentario);
   });
 
 });
