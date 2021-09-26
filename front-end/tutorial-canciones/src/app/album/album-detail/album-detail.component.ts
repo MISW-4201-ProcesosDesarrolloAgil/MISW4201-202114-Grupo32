@@ -64,7 +64,6 @@ export class AlbumDetailComponent implements OnInit {
       this.albumService.compartirAlbum(this.token, this.album, this.usuariosACompartir).subscribe(album => {
         album.usuario = this.album.usuario;
         this.album = album;
-        console.log(album);
         this.albumCompartidoExitosamente()
       }, error => {
         this.showError("Hubo un error. ->" + error.message)

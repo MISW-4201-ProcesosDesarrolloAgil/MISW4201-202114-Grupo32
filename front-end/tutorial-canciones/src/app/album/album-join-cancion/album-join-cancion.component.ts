@@ -56,7 +56,7 @@ export class AlbumJoinCancionComponent implements OnInit {
 
   getCanciones(cancionesAlbum: Array<any>){
     let cancionesNoAgregadas: Array<Cancion> = []
-    this.cancionService.getCanciones(this.userId)
+    this.cancionService.getCanciones(this.userId,this.token)
     .subscribe(canciones => {
       canciones.map(c => {
         if(!cancionesAlbum.includes(c.id)){
