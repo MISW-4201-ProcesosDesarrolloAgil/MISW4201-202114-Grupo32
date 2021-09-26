@@ -20,6 +20,8 @@ export class FooterComponent implements OnInit {
     const token = this.router.snapshot.params.userToken
     if (menu === "about") {
       this.routerPath.navigate([`/about/${userId}/${token}`])
+      console.log(":::userId", userId, ":::token", token);
+
     }
   }
   status: boolean = false;
