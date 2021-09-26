@@ -1,54 +1,47 @@
 <app-header></app-header>
-<div class="container my-4">
-    <div class="row">
-      <div class="col-4">
-        <div class="card">
-          <div class="card-header">
+<div class="container my-4" id="cancion" style="background-color: none;">
+    <div class="row align-items-center">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-lg-4">
+        <div class="card ionic-card">
+          <div class="card-header ionic-card-header">
             <div class="row">
-              <div class="col-10 text-center">
-                <label class="fs-4">Canciones</label>
-              </div>
-              <div class="col-2 text-center">
-                <button type="button" class="my-1 btn btn-outline-primary btn-circle" (click)="irCrearCancion()"><i class="bi bi-plus-lg"></i></button>
+              <div class="col-12 text-center mb-2">
+                <label class="fs-4">
+                  <h1>Canciones</h1>
+                </label>
+                <img class="iconos" (click)="irCrearCancion()" src="/assets/create.png" alt="crear" />
               </div>
             </div>
           </div>
-          <div class="card-body">
-
+          <div class="card-body ionic-card-body">
             <div class="input-group my-2">
               <input #busqueda type="search" class="form-control" placeholder="Buscar canciones" aria-label="Search" (keyup)="buscarCancion(busqueda.value)">
             </div>
-
             <table class="table table-hover mb-0" aria-describedby="colecName">
               <tbody>
-                  <tr *ngFor="let cancion of mostrarCanciones; index as i" (click)="onSelect(cancion, i)" [ngClass]="{'selected': i === indiceSeleccionado}">
-                    <td>{{cancion.titulo}}</td>
-                    <td>{{cancion.minutos}}:{{cancion.segundos}}</td>
+                  <tr class="ionic-tr" *ngFor="let cancion of mostrarCanciones; index as i" (click)="onSelect(cancion, i)" [ngClass]="{'selected': i === indiceSeleccionado}">
+                    <td class="ionic-td">{{cancion.titulo}}</td>
+                    <td class="ionic-td">{{cancion.minutos}}:{{cancion.segundos}}</td>
                   </tr>
               </tbody>
             </table>
-
           </div>
         </div>
-        <div class="card">
-          <div class="card-header">
+        <div class="card ionic-card">
+          <div class="card-header ionic-card-header">
             <div class="row">
               <div class="col-10 text-center">
                 <label class="fs-4">Canciones Compartidas</label>
               </div>
             </div>
           </div>
-          <div class="card-body">
-
-            <div class="input-group my-2">
-              <input #busqueda type="search" class="form-control" placeholder="Buscar canciones" aria-label="Search" (keyup)="buscarCancion(busqueda.value)">
-            </div>
-
+          <div class="card-body ionic-card-body">
             <table class="table table-hover mb-0" aria-describedby="colecName">
               <tbody>
-                  <tr *ngFor="let cancion of mostrarCancionesCompartidas; index as i" (click)="onSelect(cancion, i)" [ngClass]="{'selected': i === indiceSeleccionado}">
-                    <td>{{cancion.titulo}}</td>
-                    <td>{{cancion.minutos}}:{{cancion.segundos}}</td>
+                  <tr class="ionic-tr" *ngFor="let cancion of mostrarCancionesCompartidas; index as i" (click)="onSelect(cancion, i)" [ngClass]="{'selected': i === indiceSeleccionado}">
+                    <td class="ionic-td">{{cancion.titulo}}</td>
+                    <td class="ionic-td">{{cancion.minutos}}:{{cancion.segundos}}</td>
+                    <td class="ionic-td">{{cancion.nombre_dueno}}</td>
                   </tr>
               </tbody>
             </table>
@@ -56,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="col-8">
+      <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-lg-8">
         <app-cancion-detail (deleteCancion)="eliminarCancion()" [cancion]="cancionSeleccionada"></app-cancion-detail>
       </div>
     </div>

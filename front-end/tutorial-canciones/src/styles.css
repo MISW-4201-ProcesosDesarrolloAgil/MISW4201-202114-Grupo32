@@ -29,7 +29,7 @@ html body {
   height: auto !important;
   background-color: var(--rnr-beige) !important;
   border: 1px solid var(--rnr-cafe) !important;
-  margin: 1em !important;
+  margin: 0.2em !important;
 }
 
 .ionic-card-header {

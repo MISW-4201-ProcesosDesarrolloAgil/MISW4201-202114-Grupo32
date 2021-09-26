@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Cancion } from './cancion';
+import { Cancion,CancionCompartida } from './cancion';
 import { Album } from '../album/album';
 
 @Injectable({
@@ -20,15 +20,18 @@ export class CancionService {
     return this.http.get<Cancion[]>(`${this.backUrl}/album/${idAlbum}/canciones`, {headers: headers})
   }
 
-  getCanciones(id_usuario: number): Observable<Cancion[]>{
-    return this.http.get<Cancion[]>(`${this.backUrl}/canciones/usuario/${id_usuario}`)
-  }
-
-  getCancionesCompartidas(id_usuario: number, token: string): Observable<Cancion[]>{
+  getCanciones(id_usuario: number, token: string): Observable<Cancion[]>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     })
-    return this.http.get<Cancion[]>(`${this.backUrl}/usuario/${id_usuario}/canciones_compartidas`, {headers: headers})
+    return this.http.get<Cancion[]>(`${this.backUrl}/canciones/usuario/${id_usuario}`, {headers: headers})
+  }
+
+  getCancionesCompartidas(id_usuario: number, token: string): Observable<CancionCompartida[]>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    })
+    return this.http.get<CancionCompartida[]>(`${this.backUrl}/usuario/${id_usuario}/canciones_compartidas`, {headers: headers})
   }
 
   getAlbumesCancion(cancionId: number): Observable<Album[]>{
