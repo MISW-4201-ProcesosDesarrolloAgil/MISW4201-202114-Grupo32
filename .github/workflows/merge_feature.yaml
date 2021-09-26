@@ -46,28 +46,16 @@ jobs:
       - name: Corre pruebas de angular
         run: |
           cd front-end/tutorial-canciones/ && CHROMIUM_BIN=$(which chrome) ng test --watch=false --browsers=ChromeHeadless
-  check-commit:
-    name: Check Commit Message
+  automerge:
+    name: Automerge
     needs:
       - pruebas-flask
       - pruebas-angular
     runs-on: ubuntu-latest
     steps:
-      - name: Check Commit Type
-        uses: gsactions/commit-message-checker@v1
-        with:
-          pattern: "^MERGE:*"
-          flags: "u"
-          error: "The last push of this feature is not ready to be merged with the develop branch"
-  automerge:
-    name: Automerge
-    needs:
-      - check-commit
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
       - name: Merge feature to develop branch
         uses: devmasx/merge-branch@v1.3.1
+        if: "contains(github.event.head_commit.message, 'MERGE:')"
         with:
           type: now
           target_branch: dev

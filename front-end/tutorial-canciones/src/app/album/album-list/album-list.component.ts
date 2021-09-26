@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from "ngx-toastr";
-import { Album, Cancion } from '../album';
+import { Album, AlbumCompartido, Cancion } from '../album';
 import { AlbumService } from '../album.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class AlbumListComponent implements OnInit {
   token: string
   albumes: Array<Album>
   mostrarAlbumes: Array<Album>
-  mostrarAlbumesCompartidos: Array<Album>
+  mostrarAlbumesCompartidos: Array<AlbumCompartido>
   albumSeleccionado: Album
   indiceSeleccionado: number
 
@@ -89,17 +89,6 @@ export class AlbumListComponent implements OnInit {
   }
 
   onSelect(a: Album, index: number, compartido:boolean){
-    $("#editar_album").show();
-    $("#eliminar_album").show();
-    $("#agregar_cancion").show();
-    $("#compartir_album").show();
-    if(compartido){
-      $("#eliminar_album").hide();
-      $("#editar_album").hide();
-      $("#agregar_cancion").hide();
-      $("#compartir_album").hide();
-    }
-
     this.indiceSeleccionado = index
     this.albumSeleccionado = a
     this.albumService.getCancionesAlbum(a.id, this.token)
