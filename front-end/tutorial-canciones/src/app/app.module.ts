@@ -13,11 +13,12 @@ import { CancionModule } from './cancion/cancion.module';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { FooterComponent } from '../footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    FooterComponent
    ],
   imports: [
     BrowserModule,

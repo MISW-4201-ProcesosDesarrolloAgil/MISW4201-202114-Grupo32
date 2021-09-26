@@ -10,7 +10,7 @@
           <div class="navbar navbar-collapse ">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item dropdown" id="compartir_album" *ngIf="album && album.usuario">
-                <img class="iconos" src="/assets/send.png" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                <img class="iconos" src="/assets/send.svg" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                   aria-expanded="false" (click)="compartirAlbum()" title="Compartir album" />
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <form>
@@ -36,13 +36,13 @@
                 </div>
               </li>
               <li class="nav-item" *ngIf="album && album.usuario">
-                <img class="iconos" id='editar_album' (click)="goToEdit()" src="/assets/edit.png" alt="crear" />
+                <img class="iconos" id='editar_album' (click)="goToEdit()" src="/assets/edit.svg" alt="crear" />
               </li>
               <li class="nav-item" *ngIf="album && album.usuario">
-                <img class="iconos" (click)="goToJoinCancion()" src="/assets/add.png" alt="crear" />
+                <img class="iconos" (click)="goToJoinCancion()" src="/assets/add.svg" alt="crear" />
               </li>
               <li class="nav-item" *ngIf="album && album.usuario">
-                <img class="iconos" id='eliminar_album' type="button" (click)="eliminarAlbum()" src="/assets/delete.png"
+                <img class="iconos" id='eliminar_album' type="button" (click)="eliminarAlbum()" src="/assets/delete.svg"
                   alt="crear" />
               </li>
             </ul>

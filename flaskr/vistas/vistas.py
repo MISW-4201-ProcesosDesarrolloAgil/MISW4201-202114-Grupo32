@@ -155,8 +155,24 @@ class VistaAlbumsCompartidosUsuario_implementacion(Resource):
             albums.append(album_compartido)
         return albums
 
+class VistaCancionesCompartidosUsuario_implementacion(Resource):
+    def get(self, id_usuario):
+        usuario = Usuario.query.get_or_404(id_usuario)
+        canciones = []
+        for al in usuario.canciones_compartidas:
+            cancion_compartida = cancion_schema.dump(al) 
+            cancion_compartida["nombre_dueno"] = Usuario.query.get(al.usuario).nombre
+            canciones.append(cancion_compartida)
+        return canciones
+
 
 class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion, Resource):
+    @jwt_required()
+    def get(self, id_usuario):
+        return super().get(id_usuario)
+
+
+class VistaCancionesCompartidosUsuario(VistaCancionesCompartidosUsuario_implementacion, Resource):
     @jwt_required()
     def get(self, id_usuario):
         return super().get(id_usuario)
