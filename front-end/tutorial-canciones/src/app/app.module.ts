@@ -13,12 +13,12 @@ import { CancionModule } from './cancion/cancion.module';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FooterComponent } from '../footer/footer.component';
+import { AppFooterModule } from './app-footer/app-footer.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent
+
    ],
   imports: [
     BrowserModule,
@@ -29,6 +29,7 @@ import { FooterComponent } from '../footer/footer.component';
     UsuarioModule,
     AlbumModule,
     CancionModule,
+    AppFooterModule,
     AppHeaderModule,
     ToastrModule.forRoot({
       timeOut: 7000,

@@ -341,10 +341,7 @@ Botones
   font-family: titulo3;
   src: url("./fonts/Bungee_Shade/BungeeShade-Regular.ttf") format("truetype");
 }
-.footer {
-  bottom: 0px;
-  width: 100%;
-  height: 10px;
+.footer_color {
   background-color: var(--rnr-azul) !important;
 }
 .about-frame {
