@@ -280,7 +280,7 @@ class VistaComentarioAlbum_implementacion:
     def post(self, id_album):
         usuario = Usuario.query.get_or_404(request.json["usuario_id"])
         alb = Usuario.query.get_or_404(request.json["album_id"])
-        # album = Usuario.query.get_or_404(request.json["album_id"])
+        # album = Usuario.query.get_or_404(request.json["album_id"])        
         nuevo_comentario = ComentarioAlbum(comentario=request.json["comentario"], fecha=request.json["fecha"],
                             usuario=usuario.id, album=alb.id  )
         album = Album.query.get_or_404(id_album)
@@ -291,7 +291,14 @@ class VistaComentarioAlbum_implementacion:
 
     def get(self, id_album):
         album = Album.query.get_or_404(id_album)
-        return [comentario_album_schema.dump(com) for com in album.comentarios]
+        lista_comentario = []
+
+        for comentario in album.comentarios:
+            comentario_album = comentario_album_schema.dump(comentario) 
+            comentario_album["nombre_usuario"] = Usuario.query.get(comentario.usuario).nombre
+            lista_comentario.append(comentario_album)
+
+        return lista_comentario
 
 
 class VistaComentarAlbum(VistaComentarioAlbum_implementacion, Resource):
