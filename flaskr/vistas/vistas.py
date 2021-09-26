@@ -1,11 +1,14 @@
+from re import A
 from flask import request
-from ..modelos import db, Cancion, CancionSchema, Usuario, UsuarioSchema, Album, AlbumSchema
+from ..modelos import db, Cancion, CancionSchema, Usuario, UsuarioSchema, Album, AlbumSchema, ComentarioAlbum, ComentarioAlbumSchema
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+import logging
 
 cancion_schema = CancionSchema()
 usuario_schema = UsuarioSchema()
+comentario_album_schema = ComentarioAlbumSchema()
 album_schema = AlbumSchema()
 
 class VistaCanciones(Resource):
@@ -132,7 +135,7 @@ class VistaCompartirAlbum_Implementacion:
 
         return album_schema.dump(album)
 
-
+#:-: Crear Album
 class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
     @jwt_required()
     def post(self, id_usuario):
@@ -141,7 +144,7 @@ class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
     def get(self, id_usuario):
         return super().get(id_usuario)
 
-
+# :-:
 class VistaAlbumsCompartidosUsuario_implementacion(Resource):
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
@@ -251,3 +254,35 @@ class VistaCompartirCancion(VistaCompartirCancion_Implementacion, Resource):
     @jwt_required()
     def post(self, id_cancion):
         return super().post(id_cancion, request.json["id_usuarios"])
+
+
+# 
+
+
+class VistaComentarioAlbum_implementacion:
+    
+    def post(self, id_album):
+        usuario = Usuario.query.get_or_404(request.json["usuario_id"])
+        alb = Usuario.query.get_or_404(request.json["album_id"])
+        # album = Usuario.query.get_or_404(request.json["album_id"])
+        nuevo_comentario = ComentarioAlbum(comentario=request.json["comentario"], fecha=request.json["fecha"],
+                            usuario=usuario.id, album=alb.id  )
+        album = Album.query.get_or_404(id_album)
+        album.comentarios.append(nuevo_comentario)
+
+        db.session.commit()
+        return comentario_album_schema.dump(nuevo_comentario)
+
+    def get(self, id_album):
+        album = Album.query.get_or_404(id_album)
+        return [comentario_album_schema.dump(com) for com in album.comentarios]
+
+
+class VistaComentarAlbum(VistaComentarioAlbum_implementacion, Resource):
+    @jwt_required()
+    def post(self, id_album):
+        return super().post(id_album)
+
+    def get(self, id_album):
+        return super().get(id_album)
+
