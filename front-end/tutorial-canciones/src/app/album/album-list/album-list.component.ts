@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from "ngx-toastr";
-import { Album, AlbumCompartido, Cancion } from '../album';
+import { Album, AlbumCompartido, Cancion, Comentario } from '../album';
 import { AlbumService } from '../album.service';
 
 @Component({
@@ -25,6 +25,7 @@ export class AlbumListComponent implements OnInit {
   mostrarAlbumesCompartidos: Array<AlbumCompartido>
   albumSeleccionado: Album
   indiceSeleccionado: number
+  comentarios :Comentario[];
 
   ngOnInit() {
     if(!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " "){
@@ -89,6 +90,8 @@ export class AlbumListComponent implements OnInit {
   }
 
   onSelect(a: Album, index: number, compartido:boolean){
+    console.log(":::Album" , a);
+
     this.indiceSeleccionado = index
     this.albumSeleccionado = a
     this.albumService.getCancionesAlbum(a.id, this.token)
@@ -99,6 +102,7 @@ export class AlbumListComponent implements OnInit {
     error =>{
       this.showError("Ha ocurrido un error, " + error.message)
     })
+    this.obtenerCometnarioAlbumes();
   }
 
   getInterpretes(canciones: Array<Cancion>): Array<string>{
@@ -155,5 +159,27 @@ export class AlbumListComponent implements OnInit {
 
   showSuccess() {
     this.toastr.success(`El album fue eliminado`, "Eliminado exitosamente");
+  }
+  obtenerCometnarioAlbumes(){
+    this.albumService.getComentario(this.albumSeleccionado.id, this.token)
+    .subscribe(comentario => {
+      this.comentarios = comentario.sort((comentario_1:any, comentario_2:any) => comentario_2.fecha.localeCompare(comentario_1.fecha));
+      console.log();
+
+
+      console.log(":::Comentarios ", comentario);
+    },
+    error => {
+      console.log(error)
+      if(error.statusText === "UNAUTHORIZED"){
+        this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+      }
+      else if(error.statusText === "UNPROCESSABLE ENTITY"){
+        this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+      }
+      else{
+        this.showError("Ha ocurrido un error. " + error.message)
+      }
+    })
   }
 }

@@ -74,3 +74,23 @@ export class AlbumCompartido extends Album{
       super(id, titulo, anio, descripcion, medio, usuario, interpretes, canciones, compartido_a)
   }
 }
+
+export class Comentario{
+  comentario: string;
+  fecha: string;
+  usuario_id: number;
+  album_id: number;
+  nombre_usuario?:string;
+
+  constructor(
+    comentario: string,
+    fecha: string,
+    usuario_id: number,
+    album_id: number,
+  ){
+      this.comentario = comentario,
+      this.fecha = fecha,
+      this.usuario_id = usuario_id,
+      this.album_id = album_id
+  }
+}

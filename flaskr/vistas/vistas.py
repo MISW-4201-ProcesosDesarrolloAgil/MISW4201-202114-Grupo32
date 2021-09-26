@@ -280,10 +280,7 @@ class VistaComentarioAlbum_implementacion:
     def post(self, id_album):
         usuario = Usuario.query.get_or_404(request.json["usuario_id"])
         alb = Usuario.query.get_or_404(request.json["album_id"])
-        # album = Usuario.query.get_or_404(request.json["album_id"])
-
-
-        
+        # album = Usuario.query.get_or_404(request.json["album_id"])        
         nuevo_comentario = ComentarioAlbum(comentario=request.json["comentario"], fecha=request.json["fecha"],
                             usuario=usuario.id, album=alb.id  )
         album = Album.query.get_or_404(id_album)
