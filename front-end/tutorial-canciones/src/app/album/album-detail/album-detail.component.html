@@ -5,13 +5,11 @@
         <label class="fs-4 fw-bold">
           <h1>Álbum: {{ album?.titulo }} ({{ album?.anio }})</h1>
         </label>
-
         <nav class="navbar navbar-expand-sm ">
           <div class="navbar navbar-collapse ">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item dropdown" id="compartir_album" *ngIf="album && album.usuario">
-                <img class="iconos" src="/assets/send.svg" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false" (click)="compartirAlbum()" title="Compartir album" />
+                <img class="iconos" src="/assets/send.svg" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="compartirAlbum()" title="Compartir album" />
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <form>
                     <label class="dropdown-item ionic-item" style="text-align: center;">Compartir a usuarios</label>
@@ -23,14 +21,8 @@
                     <ng-template #notUsers><label class="dropdown-item" style="text-align: center; color: gray;">No hay
                         usuarios</label></ng-template>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item " class="btn btn-primary" (click)="onSubmitCompartirAlbum()">Enviar</a>
-                    <!-- <button
-                    class="btn btn-primary"
-                    style="text-align: center;"
-                    (click)="onSubmitCompartirAlbum()"
-                  >
-                  Enviar
-                  </button> -->
+                    <a class="dropdown-item" class="btn btn-primary"
+                     (click)="onSubmitCompartirAlbum()">Enviar</a>
                   </form>
                 </div>
               </li>
@@ -47,23 +39,9 @@
             </ul>
           </div>
         </nav>
-
-
-
-
-
       </div>
     </div>
   </div>
-
-  <!-- <div class="container">
-    <div class="row"> -->
-
-  <!-- </div>
-    </div> -->
-
-
-
   <div class="row mt-2">
     <div class="col-12 col-sm-6 col-md-6 ">
       <div class="card ionic-card">

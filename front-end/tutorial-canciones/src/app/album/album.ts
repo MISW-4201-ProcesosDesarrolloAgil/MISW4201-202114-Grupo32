@@ -32,8 +32,8 @@ export class Medio{
         llave: string,
         valor:number
     ){
-        this.llave = llave,
-        this.valor = valor
+        this.llave = llave;
+        this.valor = valor;
     }
 }
 
@@ -51,11 +51,11 @@ export class Cancion{
         segundos: number,
         interprete: string
     ){
-        this.id = id,
-        this.titulo = titulo,
-        this.minutos = minutos,
-        this.segundos = segundos,
-        this.interprete = interprete
+        this.id = id;
+        this.titulo = titulo;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.interprete = interprete;
     }
 }
 
