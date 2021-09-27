@@ -56,13 +56,10 @@ export class CancionListComponent implements OnInit {
   getCancionesCompartidas():void{
     this.cancionService.getCancionesCompartidas(this.userId, this.token)
     .subscribe(canciones => {
-      this.cancionesCompartidas = canciones.map(cancion => {
-        cancion.usuario = this.userId;
-        return cancion;
-      })
-      this.mostrarCancionesCompartidas = this.cancionesCompartidas
+      this.cancionesCompartidas = canciones;
+      this.mostrarCancionesCompartidas = this.cancionesCompartidas;
       if(canciones.length>0){
-        this.onSelect(this.mostrarCancionesCompartidas[0], 0)
+        this.onSelect(this.mostrarCancionesCompartidas[0], 0);
       }
     },
     error => {

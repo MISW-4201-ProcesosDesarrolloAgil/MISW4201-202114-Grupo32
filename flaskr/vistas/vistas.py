@@ -144,26 +144,28 @@ class VistaAlbumsUsuario(VistaAlbumsUsuario_implementacion, Resource):
     def get(self, id_usuario):
         return super().get(id_usuario)
 
-# :-:
+def agregar_nombre(item, schema):
+    resultado = schema.dump(item)
+    resultado["nombre_dueno"] = Usuario.query.get(item.usuario).nombre
+    return resultado
+
+def agregar_nombres_albumes(album):
+    return agregar_nombre(album, album_schema)
+
+def agregar_nombres_canciones(cancion):
+    return agregar_nombre(cancion, cancion_schema)
+
 class VistaAlbumsCompartidosUsuario_implementacion(Resource):
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
-        albums = []
-        for al in usuario.albumes_compartidos:
-            album_compartido = album_schema.dump(al) 
-            album_compartido["nombre_dueno"] = Usuario.query.get(al.usuario).nombre
-            albums.append(album_compartido)
-        return albums
+        albums = map(agregar_nombres_albumes, usuario.albumes_compartidos)
+        return list(albums)
 
 class VistaCancionesCompartidosUsuario_implementacion(Resource):
     def get(self, id_usuario):
         usuario = Usuario.query.get_or_404(id_usuario)
-        canciones = []
-        for al in usuario.canciones_compartidas:
-            cancion_compartida = cancion_schema.dump(al) 
-            cancion_compartida["nombre_dueno"] = Usuario.query.get(al.usuario).nombre
-            canciones.append(cancion_compartida)
-        return canciones
+        canciones = map(agregar_nombres_canciones, usuario.canciones_compartidas)
+        return list(canciones)
 
 
 class VistaAlbumsCompartidosUsuario(VistaAlbumsCompartidosUsuario_implementacion, Resource):
@@ -270,10 +272,6 @@ class VistaCompartirCancion(VistaCompartirCancion_Implementacion, Resource):
     @jwt_required()
     def post(self, id_cancion):
         return super().post(id_cancion, request.json["id_usuarios"])
-
-
-# 
-
 
 class VistaComentarioAlbum_implementacion:
     

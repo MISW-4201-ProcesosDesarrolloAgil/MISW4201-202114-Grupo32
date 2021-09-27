@@ -88,9 +88,9 @@ export class Comentario{
     usuario_id: number,
     album_id: number,
   ){
-      this.comentario = comentario,
-      this.fecha = fecha,
-      this.usuario_id = usuario_id,
-      this.album_id = album_id
+      this.comentario = comentario;
+      this.fecha = fecha;
+      this.usuario_id = usuario_id;
+      this.album_id = album_id;
   }
 }
