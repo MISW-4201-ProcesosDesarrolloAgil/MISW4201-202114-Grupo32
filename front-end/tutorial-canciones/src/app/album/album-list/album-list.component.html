@@ -7,27 +7,16 @@
           <div class="row">
             <div class="col-12 text-center mb-2">
               <label class="fs-4 fw-bold">
-
                 <h1> Álbumes </h1>
               </label>
-
-
-            <!-- <div class="col-2 col-sm-2 col-md-2 col-lg-2 col-lg-2  text-center"> -->
-              <!-- <button type="button" class="btn btn-outline-primary btn-circle" ><i
-                  class="bi bi-plus-lg"></i></button> -->
-                  <img class="iconos" (click)="irCrearAlbum()" src="/assets/create.png" alt="crear" />
-
-            <!-- </div> -->
+              <img class="iconos" (click)="irCrearAlbum()" src="/assets/create.png" alt="crear" />
             </div>
           </div>
         </div>
         <div class="card-body ionic-card-body">
-
           <div class="input-group my-2">
-            <input #busqueda type="search" class="form-control" placeholder="Buscar álbumes" aria-label="Search"
-              (keyup)="buscarAlbum(busqueda.value)">
+            <input #busqueda type="search" class="form-control" placeholder="Buscar álbumes" aria-label="Search" (keyup)="buscarAlbum(busqueda.value)">
           </div>
-
           <table class="table table-hover mb-0" aria-describedby="colecName">
             <tbody>
               <tr class="ionic-tr" *ngFor="let album of mostrarAlbumes; index as i" (click)="onSelect(album, i,false)"
@@ -75,7 +64,7 @@
       </div>
     </div>
     <div class="col-12 col-sm-12 col-md-8 col-lg-8 col-lg-8">
-      <app-album-detail (deleteAlbum)="eliminarAlbum()" [album]="albumSeleccionado"></app-album-detail>
+      <app-album-detail (deleteAlbum)="eliminarAlbum()" [album]="albumSeleccionado" [comentarios]= "comentarios"></app-album-detail>
     </div>
   </div>
 </div>

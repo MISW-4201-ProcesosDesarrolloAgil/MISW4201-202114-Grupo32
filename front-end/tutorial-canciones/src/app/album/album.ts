@@ -32,8 +32,8 @@ export class Medio{
         llave: string,
         valor:number
     ){
-        this.llave = llave,
-        this.valor = valor
+        this.llave = llave;
+        this.valor = valor;
     }
 }
 
@@ -51,11 +51,11 @@ export class Cancion{
         segundos: number,
         interprete: string
     ){
-        this.id = id,
-        this.titulo = titulo,
-        this.minutos = minutos,
-        this.segundos = segundos,
-        this.interprete = interprete
+        this.id = id;
+        this.titulo = titulo;
+        this.minutos = minutos;
+        this.segundos = segundos;
+        this.interprete = interprete;
     }
 }
 
@@ -72,5 +72,25 @@ export class AlbumCompartido extends Album{
     public compartido_a: Array<number>,
     public nombre_dueno: String){
       super(id, titulo, anio, descripcion, medio, usuario, interpretes, canciones, compartido_a)
+  }
+}
+
+export class Comentario{
+  comentario: string;
+  fecha: string;
+  usuario_id: number;
+  album_id: number;
+  nombre_usuario?:string;
+
+  constructor(
+    comentario: string,
+    fecha: string,
+    usuario_id: number,
+    album_id: number,
+  ){
+      this.comentario = comentario;
+      this.fecha = fecha;
+      this.usuario_id = usuario_id;
+      this.album_id = album_id;
   }
 }

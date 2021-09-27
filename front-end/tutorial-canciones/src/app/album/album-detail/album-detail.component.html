@@ -5,13 +5,11 @@
         <label class="fs-4 fw-bold">
           <h1>Álbum: {{ album?.titulo }} ({{ album?.anio }})</h1>
         </label>
-
         <nav class="navbar navbar-expand-sm ">
           <div class="navbar navbar-collapse ">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item dropdown" id="compartir_album" *ngIf="album && album.usuario">
-                <img class="iconos" src="/assets/send.png" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                  aria-expanded="false" (click)="compartirAlbum()" title="Compartir album" />
+                <img class="iconos" src="/assets/send.svg" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="compartirAlbum()" title="Compartir album" />
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <form>
                     <label class="dropdown-item ionic-item" style="text-align: center;">Compartir a usuarios</label>
@@ -23,48 +21,27 @@
                     <ng-template #notUsers><label class="dropdown-item" style="text-align: center; color: gray;">No hay
                         usuarios</label></ng-template>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item "                      class="btn btn-primary"
+                    <a class="dropdown-item" class="btn btn-primary"
                      (click)="onSubmitCompartirAlbum()">Enviar</a>
-                    <!-- <button
-                    class="btn btn-primary"
-                    style="text-align: center;"
-                    (click)="onSubmitCompartirAlbum()"
-                  >
-                  Enviar
-                  </button> -->
                   </form>
                 </div>
               </li>
               <li class="nav-item" *ngIf="album && album.usuario">
-                <img class="iconos" id='editar_album' (click)="goToEdit()" src="/assets/edit.png" alt="crear" />
+                <img class="iconos" id='editar_album' (click)="goToEdit()" src="/assets/edit.svg" alt="crear" />
               </li>
               <li class="nav-item" *ngIf="album && album.usuario">
-                <img class="iconos" (click)="goToJoinCancion()" src="/assets/add.png" alt="crear" />
+                <img class="iconos" (click)="goToJoinCancion()" src="/assets/add.svg" alt="crear" />
               </li>
               <li class="nav-item" *ngIf="album && album.usuario">
-                <img class="iconos" id='eliminar_album' type="button" (click)="eliminarAlbum()" src="/assets/delete.png"
+                <img class="iconos" id='eliminar_album' type="button" (click)="eliminarAlbum()" src="/assets/delete.svg"
                   alt="crear" />
               </li>
             </ul>
           </div>
         </nav>
-
-
-
-
-
       </div>
     </div>
   </div>
-
-  <!-- <div class="container">
-    <div class="row"> -->
-
-  <!-- </div>
-    </div> -->
-
-
-
   <div class="row mt-2">
     <div class="col-12 col-sm-6 col-md-6 ">
       <div class="card ionic-card">
@@ -99,39 +76,78 @@
 
   <div class="row card ionic-card">
     <div class="card-header ionic-card-header">
-      <div class="col-12 mt-3 mb-2 ms-2">
+
+      <!-- <div class="col-12 mt-3 mb-2 ms-2">
         <h2>Canciones</h2>
+      </div> -->
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+            type="button" role="tab" aria-controls="nav-home" aria-selected="true"><h2>Canciones</h2></button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+            role="tab" aria-controls="nav-profile" aria-selected="false"><h2>Comentarios</h2></button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          <div class="col-12 card-body ionic-card-body">
+            <table class="table table-hover table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="text-center ionic-td titulo-tabla">
+                    <h2>Canción</h2>
+                  </th>
+                  <th scope="col" class="text-center ionic-td titulo-tabla">
+                    <h2>Duración</h2>
+                  </th>
+                  <th scope="col" class="text-center ionic-td titulo-tabla">
+                    <h2>Intérprete</h2>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cancion of album?.canciones">
+                  <td class="contenido-tabla">
+                    <p>{{ cancion.titulo }}</p>
+                  </td>
+                  <td class="text-center contenido-tabla">
+                    <p>{{ cancion.minutos }}:{{ cancion.segundos }}</p>
+                  </td>
+                  <td class="contenido-tabla">
+                    <p>{{ cancion.interprete }}</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-profile"  role="tabpanel" aria-labelledby="nav-profile-tab">
+          <div style="display:flex">
+            <input #comentario type="search" name ="comentario" class="form-control" placeholder="Comentario" aria-label="Search">
+            <button class="btn btn-primary" (click)="enviarComentario(comentario.value)"  >
+
+              Enviar
+            </button>
+          </div>
+
+          <div class="col-12 card-body ionic-card-body vertical-scrollable" style="height:30em">
+
+                <div *ngFor="let comentario of comentarios">
+
+                  <div class="card-body ionic-card-body">
+                    <div class="ionic-td">
+                      <p>
+                        <span class="text-capitalize">{{ comentario.nombre_usuario }}</span>
+                      </p>
+                      <p data-toggle="tooltip" data-placement="top" [title]="comentario.fecha | date: 'dd/MM/yyyy HH:mm:ss'">{{ comentario.comentario}}</p>
+                    </div>
+                  </div>
+                </div>
+
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-12 card-body ionic-card-body">
-      <table class="table table-hover table-bordered">
-        <thead class="table-light">
-          <tr>
-            <th scope="col" class="text-center ionic-td titulo-tabla">
-              <h2>Canción</h2>
-            </th>
-            <th scope="col" class="text-center ionic-td titulo-tabla">
-              <h2>Duración</h2>
-            </th>
-            <th scope="col" class="text-center ionic-td titulo-tabla">
-              <h2>Intérprete</h2>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let cancion of album?.canciones">
-            <td class="contenido-tabla">
-              <p>{{ cancion.titulo }}</p>
-            </td>
-            <td class="text-center contenido-tabla">
-              <p>{{ cancion.minutos }}:{{ cancion.segundos }}</p>
-            </td>
-            <td class="contenido-tabla">
-              <p>{{ cancion.interprete }}</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Cancion } from '../cancion';
+import { Cancion,CancionCompartida } from '../cancion';
 import { CancionService } from '../cancion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -21,9 +21,9 @@ export class CancionListComponent implements OnInit {
   userId: number
   token: string
   canciones: Array<Cancion>
-  cancionesCompartidas: Array<Cancion>
+  cancionesCompartidas: Array<CancionCompartida>
   mostrarCanciones: Array<Cancion>
-  mostrarCancionesCompartidas: Array<Cancion>
+  mostrarCancionesCompartidas: Array<CancionCompartida>
   cancionSeleccionada: Cancion
   indiceSeleccionado: number = 0
 
@@ -40,26 +40,39 @@ export class CancionListComponent implements OnInit {
   }
 
   getCanciones():void{
-    this.cancionService.getCanciones(this.userId)
+    this.cancionService.getCanciones(this.userId, this.token)
     .subscribe(canciones => {
       this.canciones = canciones.map(cancion => {
         cancion.usuario = this.userId;
         return cancion;
       })
       this.mostrarCanciones = canciones
-      this.onSelect(this.mostrarCanciones[0], 0)
+      if(canciones.length>0){
+        this.onSelect(this.mostrarCanciones[0], 0)
+      }
     })
   }
 
   getCancionesCompartidas():void{
     this.cancionService.getCancionesCompartidas(this.userId, this.token)
     .subscribe(canciones => {
-      this.cancionesCompartidas = canciones.map(cancion => {
-        cancion.usuario = this.userId;
-        return cancion;
-      })
-      this.mostrarCancionesCompartidas = canciones
-      this.onSelect(this.mostrarCancionesCompartidas[0], 0)
+      this.cancionesCompartidas = canciones;
+      this.mostrarCancionesCompartidas = this.cancionesCompartidas;
+      if(canciones.length>0){
+        this.onSelect(this.mostrarCancionesCompartidas[0], 0);
+      }
+    },
+    error => {
+      console.log(error)
+      if(error.statusText === "UNAUTHORIZED"){
+        this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+      }
+      else if(error.statusText === "UNPROCESSABLE ENTITY"){
+        this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+      }
+      else{
+        this.showError("Ha ocurrido un error. " + error.message)
+      }
     })
   }
 
@@ -104,6 +117,10 @@ export class CancionListComponent implements OnInit {
 
   showError(error: string){
     this.toastr.error(error, "Error de autenticación")
+  }
+
+  showWarning(warning: string){
+    this.toastr.warning(warning, "Error de autenticación")
   }
 
   showSuccess() {
