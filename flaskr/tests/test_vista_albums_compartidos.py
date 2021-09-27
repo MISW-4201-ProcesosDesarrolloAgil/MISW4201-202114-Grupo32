@@ -7,7 +7,6 @@ from faker import Faker
 
 import flaskr.app
 
-
 __author__ = "Luis León"
 __copyright__ = "Luis León"
 __license__ = "mit"
